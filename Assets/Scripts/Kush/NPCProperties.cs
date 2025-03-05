@@ -64,6 +64,13 @@ public class NPCProperties : MonoBehaviour
         properties.facialHair = (FacialHairProperties)Random.Range(0, (int)FacialHairProperties.Total);
         properties.body = (BodyType)Random.Range(0, (int)BodyType.Total);
 
+        //Debug Messages
+        Debug.Log(properties.sex);
+        Debug.Log(properties.headHair);
+        Debug.Log(properties.race);
+        Debug.Log(properties.facialHair);
+        Debug.Log(properties.body);
+
         return properties;
     }
 }
