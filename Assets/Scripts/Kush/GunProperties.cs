@@ -28,7 +28,12 @@ public class GunProperties : MonoBehaviour
         if(curAmmo <=0 && scoped)
         {
             UnScope();
-        } 
+        }
+
+        if (curAmmo <= 0 && !isReloading)
+        {
+            ShootAndLogicHandling.instance.reloadDebugTxt.text = "Reload Gun";
+        }
     }
 
     public void ScopeIn()
@@ -57,6 +62,7 @@ public class GunProperties : MonoBehaviour
     {
         if ((curAmmo < maxAmmo && !isReloading))
         {
+            ShootAndLogicHandling.instance.reloadDebugTxt.text = "Reloading...";
             isReloading = true;
             StartCoroutine(Reloading());
         }
@@ -65,6 +71,7 @@ public class GunProperties : MonoBehaviour
     IEnumerator Reloading()
     {
         yield return new WaitForSeconds(reloadTime);
+        ShootAndLogicHandling.instance.reloadDebugTxt.text = string.Empty;
         curAmmo = maxAmmo;
         isReloading = false;
     }
@@ -80,6 +87,8 @@ public class GunProperties : MonoBehaviour
             if (Physics.Raycast(MouseLookAround.instance.transform.position, MouseLookAround.instance.transform.forward, out RaycastHit hit))
             {
                 Debug.LogError(hit.transform.name);
+
+                ShootAndLogicHandling.instance.ProcessHit(hit);
             }
         }
     }

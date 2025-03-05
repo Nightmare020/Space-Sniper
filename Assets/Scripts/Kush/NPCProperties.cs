@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class NPCProperties : MonoBehaviour
 {
@@ -54,23 +56,185 @@ public class NPCProperties : MonoBehaviour
         public BodyType body;
     }
 
-    public Properties SetNPC()
+    public enum Order
     {
-        Properties properties = new Properties();
+        Sex,
+        Race,
+        HeadHair,
+        FacialHair,
+        Body
+    }
 
-        properties.sex = (Sex)Random.Range(0, (int)Sex.Total);
-        properties.headHair = (HeadHairProperties)Random.Range(0, (int)HeadHairProperties.Total);
-        properties.race = (Races)Random.Range(0, (int)Races.Total);
-        properties.facialHair = (FacialHairProperties)Random.Range(0, (int)FacialHairProperties.Total);
-        properties.body = (BodyType)Random.Range(0, (int)BodyType.Total);
+    public static Properties SetNPC(int debug = -1, TextMeshProUGUI debugTxt = null)
+    {
+        Properties properties = new()
+        {
+            sex = (Sex)Random.Range(0, (int)Sex.Total),
+            headHair = (HeadHairProperties)Random.Range(0, (int)HeadHairProperties.Total),
+            race = (Races)Random.Range(0, (int)Races.Total),
+            body = (BodyType)Random.Range(0, (int)BodyType.Total)
+        };
+        if (properties.sex != Sex.Female)
+            properties.facialHair = (FacialHairProperties)Random.Range(0, (int)FacialHairProperties.Total);
+        else
+            properties.facialHair = FacialHairProperties.CleanShaven;
+        
 
-        //Debug Messages
-        Debug.Log(properties.sex);
-        Debug.Log(properties.headHair);
-        Debug.Log(properties.race);
-        Debug.Log(properties.facialHair);
-        Debug.Log(properties.body);
+        //Debug
+        if(debug != -1 && debugTxt != null)
+        {
+            //Debug Messages
+            debugTxt.text += "\n" + properties.sex.ToString() + "\n" +
+                properties.headHair.ToString() + "\n" +
+                properties.race.ToString() + "\n" +
+                properties.facialHair.ToString() + "\n" +
+                properties.body.ToString();
+        }
 
         return properties;
+    }
+
+    public int CompareProperties(TextMeshProUGUI txt, Properties targetProperty, Properties property, int curProperty = -1, bool print = false)
+    {
+        //Print Logic
+        if (print)
+        {
+            if (curProperty == -1)
+            {
+                txt.text = string.Empty;
+                if (property.sex != Sex.Female)
+                {
+                    txt.text = "You shot a " +
+                    property.sex.ToString()
+                    + " who is " +
+                    property.race.ToString()
+                    + " has " +
+                    property.headHair.ToString() + " hair"
+                    + ", " +
+                    property.facialHair.ToString()
+                    + " and " +
+                    property.body.ToString() + " body!";
+                }
+                else
+                {
+                    txt.text = "You shot a " +
+                    property.sex.ToString()
+                    + " who is " +
+                    property.race.ToString()
+                    + " has " +
+                    property.headHair.ToString()
+                    + " and " +
+                    property.body.ToString() + " body!";
+                }
+            }
+            else
+            {
+                txt.text = string.Empty;
+                switch (curProperty)
+                {
+                    case 1:
+                        txt.text = property.sex.ToString();
+                        break;
+
+                    case 2:
+                        txt.text = property.race.ToString();
+                        break;
+
+                    case 3:
+                        txt.text = property.headHair.ToString();
+                        break;
+
+                    case 4:
+                        if (property.sex != Sex.Female)
+                        {
+                            txt.text = property.facialHair.ToString();
+                        }
+                        curProperty++;
+                        GameManager.instance.IncProperty();
+                        CompareProperties(txt, property, targetProperty, curProperty);
+                        break;
+
+                    case 5:
+                        txt.text = property.body.ToString();
+                        break;
+                }
+            }
+        }
+
+        //Compare Logic
+        if(targetProperty.Equals(property))
+        {
+            txt.text = "You Win! (Very lucky)";
+            return -1;
+        }
+
+        switch (curProperty)
+        {
+            case 1:
+                if (targetProperty.sex == property.sex)
+                {
+                    txt.text = "Sex Matches";
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+
+            case 2:
+                if (targetProperty.race == property.race)
+                {
+                    txt.text += ", race Matches";
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+
+            case 3:
+                if (targetProperty.headHair == property.headHair)
+                {
+                    txt.text += ", headHair Matches";
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+
+            case 4:
+                if (property.sex == targetProperty.sex && targetProperty.sex != Sex.Female)
+                {
+                    if (targetProperty.facialHair == property.facialHair)
+                    {
+                        txt.text += ", facialHair Matches";
+                        return 1;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+                else
+                {
+                    curProperty++;
+                    GameManager.instance.IncProperty();
+                    return CompareProperties(txt, targetProperty, property, curProperty);
+                }
+
+            case 5:
+                if (targetProperty.body == property.body)
+                {
+                    txt.text += ", body Matches";
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+        }
+
+        return 0;
     }
 }
