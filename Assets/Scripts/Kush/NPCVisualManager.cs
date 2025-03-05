@@ -4,15 +4,29 @@ using UnityEngine;
 
 public class NPCVisualManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static NPCVisualManager instance;
+
+    [Header("Visual Categories")]
+    public GameObject bodyTypes;
+    public GameObject facialHair;
+    public GameObject race;
+    public GameObject headHair;
+    public GameObject sex;
+
+    private void Awake()
     {
-        
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(this);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetVisuals(NPCProperties.Properties properties)
     {
-        
+        bodyTypes.transform.GetChild((int)properties.body + 1).gameObject.SetActive(true);
+        facialHair.transform.GetChild((int)properties.facialHair + 1).gameObject.SetActive(true);
+        race.transform.GetChild((int)properties.race + 1).gameObject.SetActive(true);
+        headHair.transform.GetChild((int)properties.headHair + 1).gameObject.SetActive(true);
+        sex.transform.GetChild((int)properties.sex + 1).gameObject.SetActive(true);
     }
 }

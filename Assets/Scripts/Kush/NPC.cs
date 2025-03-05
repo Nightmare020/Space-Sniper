@@ -11,6 +11,7 @@ public class NPC : NPCProperties
     void Start()
     {
         properties = SetNPC();
+        NPCVisualManager.instance.SetVisuals(properties);
     }
 
     // Update is called once per frame
