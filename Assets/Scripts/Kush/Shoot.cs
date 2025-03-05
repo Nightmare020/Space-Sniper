@@ -18,44 +18,17 @@ public class Shoot : MonoBehaviour
     {
         if (Input.GetButton("Fire1"))
         {
-            ShootBullet();
+            gun.ShootBullet();
         }
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            ReloadGun();
+            gun.ReloadGun();
         }
-    }
 
-    void ReloadGun()
-    {
-        if ((gun.curAmmo < gun.maxAmmo && !gun.isReloading))
+        if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            gun.isReloading = true;
-            StartCoroutine(Reloading());
-        }
-    }
-
-    IEnumerator Reloading()
-    {
-        yield return new WaitForSeconds(gun.reloadTime);
-        gun.curAmmo = gun.maxAmmo;
-        gun.isReloading = false;
-    }
-
-    void ShootBullet()
-    {
-        if(Time.time >= gun.nextTimeToFire && gun.curAmmo > 0 && !gun.isReloading)
-        {
-            gun.nextTimeToFire = Time.time + 1f / gun.fireRate;
-            gun.curAmmo--;
-
-            //Shoot logic
-            RaycastHit hit;
-            if (Physics.Raycast(MouseLookAround.instance.transform.position, MouseLookAround.instance.transform.forward, out hit))
-            {
-                Debug.LogError(hit.transform.name);
-            }
+            gun.ScopeIn();
         }
     }
 }
