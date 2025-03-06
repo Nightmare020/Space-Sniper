@@ -38,22 +38,12 @@ public class NPCProperties : MonoBehaviour
         Total
     }
 
-    public enum BodyType
-    {
-        Skinny,
-        Average,
-        Muscular,
-        Obese,
-        Total
-    }
-
     public struct Properties
     {
         public Sex sex;
         public HeadHairProperties headHair;
         public Races race;
         public FacialHairProperties facialHair;
-        public BodyType body;
     }
 
     public enum Order
@@ -61,8 +51,7 @@ public class NPCProperties : MonoBehaviour
         Sex,
         Race,
         HeadHair,
-        FacialHair,
-        Body
+        FacialHair
     }
 
     public static Properties SetNPC(int debug = -1, TextMeshProUGUI debugTxt = null)
@@ -72,7 +61,6 @@ public class NPCProperties : MonoBehaviour
             sex = (Sex)Random.Range(0, (int)Sex.Total),
             headHair = (HeadHairProperties)Random.Range(0, (int)HeadHairProperties.Total),
             race = (Races)Random.Range(0, (int)Races.Total),
-            body = (BodyType)Random.Range(0, (int)BodyType.Total)
         };
         if (properties.sex != Sex.Female)
             properties.facialHair = (FacialHairProperties)Random.Range(0, (int)FacialHairProperties.Total);
@@ -85,10 +73,9 @@ public class NPCProperties : MonoBehaviour
         {
             //Debug Messages
             debugTxt.text += "\n" + properties.sex.ToString() + "\n" +
-                properties.headHair.ToString() + "\n" +
                 properties.race.ToString() + "\n" +
-                properties.facialHair.ToString() + "\n" +
-                properties.body.ToString();
+                properties.headHair.ToString() + "\n" +
+                properties.facialHair.ToString();
         }
 
         return properties;
@@ -110,10 +97,8 @@ public class NPCProperties : MonoBehaviour
                     property.race.ToString()
                     + " has " +
                     property.headHair.ToString() + " hair"
-                    + ", " +
-                    property.facialHair.ToString()
-                    + " and " +
-                    property.body.ToString() + " body!";
+                    + ", and" +
+                    property.facialHair.ToString();
                 }
                 else
                 {
@@ -121,10 +106,8 @@ public class NPCProperties : MonoBehaviour
                     property.sex.ToString()
                     + " who is " +
                     property.race.ToString()
-                    + " has " +
-                    property.headHair.ToString()
-                    + " and " +
-                    property.body.ToString() + " body!";
+                    + ", and has " +
+                    property.headHair.ToString();
                 }
             }
             else
@@ -154,9 +137,6 @@ public class NPCProperties : MonoBehaviour
                         CompareProperties(txt, property, targetProperty, curProperty);
                         break;
 
-                    case 5:
-                        txt.text = property.body.ToString();
-                        break;
                 }
             }
         }
@@ -221,17 +201,6 @@ public class NPCProperties : MonoBehaviour
                     curProperty++;
                     GameManager.instance.IncProperty();
                     return CompareProperties(txt, targetProperty, property, curProperty);
-                }
-
-            case 5:
-                if (targetProperty.body == property.body)
-                {
-                    txt.text += ", body Matches";
-                    return 1;
-                }
-                else
-                {
-                    return 0;
                 }
         }
 

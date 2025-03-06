@@ -76,6 +76,8 @@ public class ShootAndLogicHandling : MonoBehaviour
                     debugTxt.text = "Completely Wrong Target";
                 }
             }
+
+            hit.transform.gameObject.SetActive(false);
         }
     }
 }

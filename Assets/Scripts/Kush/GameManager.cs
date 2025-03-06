@@ -8,12 +8,12 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     [Header("Round")]
-    [SerializeField] int totRound = 5;
     [SerializeField] int curRound = 1;
+    int totRound = 5;
 
     [Header("Total Properties")]
     [SerializeField] int curProperty = 1;
-    int totProperty = 5;
+    int totProperty = 4;
 
     [Header("Target Properties")]
     [SerializeField] NPCProperties.Properties targetProperties;

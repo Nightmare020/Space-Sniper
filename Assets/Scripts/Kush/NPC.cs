@@ -12,7 +12,6 @@ public class NPC : NPCProperties
     public TextMeshProUGUI propertyDebugTxt;
 
     [Header("Visual Categories")]
-    public GameObject bodyTypes;
     public GameObject facialHair;
     public GameObject race;
     public GameObject headHair;
@@ -32,6 +31,12 @@ public class NPC : NPCProperties
         SetVisuals(properties);
     }
 
+    public void SetTargetNPC()
+    {
+        properties = GameManager.instance.GetTargetProperties();
+        SetVisuals(properties);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -40,7 +45,6 @@ public class NPC : NPCProperties
 
     public void SetVisuals(Properties properties)
     {
-        bodyTypes.transform.GetChild((int)properties.body + 1).gameObject.SetActive(true);
         facialHair.transform.GetChild((int)properties.facialHair + 1).gameObject.SetActive(true);
         race.transform.GetChild((int)properties.race + 1).gameObject.SetActive(true);
         headHair.transform.GetChild((int)properties.headHair + 1).gameObject.SetActive(true);
