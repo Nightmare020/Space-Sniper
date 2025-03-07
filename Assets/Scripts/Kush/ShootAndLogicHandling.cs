@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ShootAndLogicHandling : MonoBehaviour
 {
@@ -13,6 +14,11 @@ public class ShootAndLogicHandling : MonoBehaviour
     [Header("UI")]
     public TextMeshProUGUI debugTxt;
     public TextMeshProUGUI reloadDebugTxt;
+
+    [Header("Events")]
+    [SerializeField] private UnityEvent<Vector3> onShoot;
+    [SerializeField] private UnityEvent<Vector3> onHit;
+    [SerializeField] private UnityEvent<Vector3> onMiss;
 
     private void Awake()
     {
@@ -49,8 +55,10 @@ public class ShootAndLogicHandling : MonoBehaviour
 
     public void ProcessHit(RaycastHit hit)
     {
+        onShoot.Invoke(hit.point);
         if(hit.transform.gameObject.TryGetComponent<NPC>(out NPC npc))
         {
+            onHit.Invoke(hit.point);
             debugTxt.text = string.Empty;
             if (npc.CompareProperties(debugTxt,
                     GameManager.instance.GetTargetProperties(),
@@ -80,5 +88,6 @@ public class ShootAndLogicHandling : MonoBehaviour
 
             hit.transform.gameObject.SetActive(false);
         }
+        else onMiss.Invoke(hit.point);
     }
 }
