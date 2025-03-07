@@ -50,7 +50,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: fda4519f8d0ef5e4d82677ea64db5b76, type: 3}
     volume: 1
     volumeVariance: 0
-    pitch: 0
+    pitch: 1
     pitchVariance: 0
     loop: 0
     mixerGroup: {fileID: 0}
