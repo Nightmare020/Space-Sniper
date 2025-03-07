@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SniperMove : MonoBehaviour
 {
+    public static SniperMove Instance { get; private set; }
+
     public Camera sniperView;
     public float rotationSpeed = 100f;
     public Vector3 minRotation;
@@ -11,6 +13,19 @@ public class SniperMove : MonoBehaviour
 
     private float rotationX = 0f;
     private float rotationY = 0f;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()

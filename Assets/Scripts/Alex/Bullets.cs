@@ -4,20 +4,25 @@ using UnityEngine;
 
 public class Bullets : MonoBehaviour
 {
+    public static Bullets Instance { get; private set; }
+
     // Array to hold the bullet GameObjects
     public GameObject[] bulletImages;
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        // Check if the Fire1 button is pressed
-        if (Input.GetButtonDown("Fire1"))
+        if (Instance == null)
         {
-            Shoot();
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 
-    private void Shoot()
+    public void BulletShooted()
     {
         // Check if there are any bullets left
         if (bulletImages.Length > 0)
@@ -32,6 +37,19 @@ public class Bullets : MonoBehaviour
             List<GameObject> bulletList = new List<GameObject>(bulletImages);
             bulletList.RemoveAt(bulletList.Count - 1);
             bulletImages = bulletList.ToArray();
+        }
+    }
+
+    public bool CheckIfBulletsLeft()
+    {
+        // Check if there are any bullets left
+        if (bulletImages.Length > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 }
