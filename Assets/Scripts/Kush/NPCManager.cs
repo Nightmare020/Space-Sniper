@@ -55,6 +55,7 @@ public class NPCManager : MonoBehaviour
             else
             {
                 var npc = Instantiate(NPCPrefab, spawnPoints[i].position, NPCPrefab.transform.rotation);
+                StartCoroutine(npc.GetComponent<NPC>().NPCs());
                 NPCs.Add(npc.transform);
                 NPCProp.Add(npc.GetComponent<NPC>().properties);
             }

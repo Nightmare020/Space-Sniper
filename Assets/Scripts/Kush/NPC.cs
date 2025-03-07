@@ -21,10 +21,10 @@ public class NPC : NPCProperties
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(NPCs());
+
     }
 
-    IEnumerator NPCs()
+    public IEnumerator NPCs()
     {
         yield return new WaitForSeconds(.0f);
         properties = SetNPC();

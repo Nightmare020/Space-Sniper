@@ -81,7 +81,7 @@ public class NPCProperties : MonoBehaviour
         return properties;
     }
 
-    public int CompareProperties(TextMeshProUGUI txt, Properties targetProperty, Properties property, int curProperty = -1, bool print = false)
+    public int CompareProperties(TextMeshProUGUI txt, Properties targetProperty, Properties property, int curProperty, bool print = false)
     {
         //Print Logic
         if (print)
@@ -142,7 +142,11 @@ public class NPCProperties : MonoBehaviour
         }
 
         //Compare Logic
-        if(targetProperty.Equals(property) && curProperty == 1)
+        if (curProperty == 1 && 
+            (targetProperty.sex == property.sex && 
+            targetProperty.race == property.race && 
+            targetProperty.headHair == property.headHair && 
+            targetProperty.facialHair == property.facialHair))
         {
             txt.text = "You Win! (Very lucky)";
             return -1;
