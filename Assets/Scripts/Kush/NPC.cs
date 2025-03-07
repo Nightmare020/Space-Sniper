@@ -26,14 +26,15 @@ public class NPC : NPCProperties
 
     IEnumerator NPCs()
     {
-        yield return new WaitForSeconds(1f);
-        properties = SetNPC(0, propertyDebugTxt);
+        yield return new WaitForSeconds(.0f);
+        properties = SetNPC();
         SetVisuals(properties);
     }
 
     public void SetTargetNPC()
     {
         properties = GameManager.instance.GetTargetProperties();
+        GetComponent<MeshRenderer>().enabled = true;
         SetVisuals(properties);
     }
 

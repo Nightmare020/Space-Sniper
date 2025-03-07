@@ -51,16 +51,17 @@ public class ShootAndLogicHandling : MonoBehaviour
     {
         if(hit.transform.gameObject.TryGetComponent<NPC>(out NPC npc))
         {
+            debugTxt.text = string.Empty;
             if (npc.CompareProperties(debugTxt,
-                    npc.properties,
                     GameManager.instance.GetTargetProperties(),
+                    npc.properties,
                     GameManager.instance.GetCurProperty()) == 1)
             {
-                GameManager.instance.IncProperty();
+                Debug.Log("Correct Target Hit");
             }
             else if (npc.CompareProperties(debugTxt,
-                        npc.properties,
                         GameManager.instance.GetTargetProperties(),
+                        npc.properties,
                         GameManager.instance.GetCurProperty()) == -1)
             {
                 Debug.Log("Master Win!");

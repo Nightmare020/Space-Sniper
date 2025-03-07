@@ -142,7 +142,7 @@ public class NPCProperties : MonoBehaviour
         }
 
         //Compare Logic
-        if(targetProperty.Equals(property))
+        if(targetProperty.Equals(property) && curProperty == 1)
         {
             txt.text = "You Win! (Very lucky)";
             return -1;
@@ -154,7 +154,9 @@ public class NPCProperties : MonoBehaviour
                 if (targetProperty.sex == property.sex)
                 {
                     txt.text = "Sex Matches";
-                    return 1;
+                    curProperty++;
+                    GameManager.instance.IncProperty();
+                    return CompareProperties(txt, targetProperty, property, curProperty);
                 }
                 else
                 {
@@ -165,7 +167,9 @@ public class NPCProperties : MonoBehaviour
                 if (targetProperty.race == property.race)
                 {
                     txt.text += ", race Matches";
-                    return 1;
+                    curProperty++;
+                    GameManager.instance.IncProperty();
+                    return CompareProperties(txt, targetProperty, property, curProperty);
                 }
                 else
                 {
@@ -176,7 +180,9 @@ public class NPCProperties : MonoBehaviour
                 if (targetProperty.headHair == property.headHair)
                 {
                     txt.text += ", headHair Matches";
-                    return 1;
+                    curProperty++;
+                    GameManager.instance.IncProperty();
+                    return CompareProperties(txt, targetProperty, property, curProperty);
                 }
                 else
                 {
@@ -189,6 +195,8 @@ public class NPCProperties : MonoBehaviour
                     if (targetProperty.facialHair == property.facialHair)
                     {
                         txt.text += ", facialHair Matches";
+                        curProperty++;
+                        GameManager.instance.IncProperty();
                         return 1;
                     }
                     else
@@ -200,7 +208,7 @@ public class NPCProperties : MonoBehaviour
                 {
                     curProperty++;
                     GameManager.instance.IncProperty();
-                    return CompareProperties(txt, targetProperty, property, curProperty);
+                    return 1;
                 }
         }
 

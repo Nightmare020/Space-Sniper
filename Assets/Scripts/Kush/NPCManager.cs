@@ -13,6 +13,7 @@ public class NPCManager : MonoBehaviour
     //Internal Variables
     private Transform[] spawnPoints;
     private List<Transform> NPCs = new();
+    public List<NPCProperties.Properties> NPCProp = new();
 
     void Awake()
     {
@@ -30,14 +31,34 @@ public class NPCManager : MonoBehaviour
         {
             spawnPoints[i] = points[i].transform;
         }
+
+        StartCoroutine(SpawnNPCs());
     }
 
     IEnumerator SpawnNPCs()
     {
         int randomIndex = Random.Range(0, spawnPoints.Length);
-        NPCs.Count;
         for(int i=0; i < spawnPoints.Length; i++)
         {
+            if (i == randomIndex && !NPCProp.Contains(GameManager.instance.GetTargetProperties()))
+            {
+                var npc = Instantiate(NPCPrefab, spawnPoints[i].position, NPCPrefab.transform.rotation);
+                npc.GetComponent<NPC>().SetTargetNPC();
+                NPCs.Add(npc.transform);
+                NPCProp.Add(npc.GetComponent<NPC>().properties);
+                Debug.Log(npc.GetComponent<NPC>().properties.sex);
+                Debug.Log(npc.GetComponent<NPC>().properties.race);
+                Debug.Log(npc.GetComponent<NPC>().properties.headHair);
+                Debug.Log(npc.GetComponent<NPC>().properties.facialHair);
+                //Debug.Log(NPCProp.Contains(GameManager.instance.GetTargetProperties()));
+            }
+            else
+            {
+                var npc = Instantiate(NPCPrefab, spawnPoints[i].position, NPCPrefab.transform.rotation);
+                NPCs.Add(npc.transform);
+                NPCProp.Add(npc.GetComponent<NPC>().properties);
+            }
+
             yield return new WaitForSeconds(.2f);
         }
     }
