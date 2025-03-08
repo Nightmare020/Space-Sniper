@@ -14,7 +14,10 @@ public class NPCAIController : MonoBehaviour
         movement.Init();
         panicController.Init();
     }
-
+    public bool IsTarget(Transform target)
+    {
+        return movement.IsTarget(target);
+    }
     public void ChangeTarget(Transform target)
     {
         movement.ChageTarget(target);
