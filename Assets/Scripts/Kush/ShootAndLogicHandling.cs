@@ -57,6 +57,7 @@ public class ShootAndLogicHandling : MonoBehaviour
         onShoot.Invoke(hit.point);
         if(hit.transform.gameObject.TryGetComponent<NPC>(out NPC npc))
         {
+            AudioManager.instance.Play("TargetHit");
             onHit.Invoke(hit.point);
 
             debugTxt.text = string.Empty;
@@ -68,10 +69,12 @@ public class ShootAndLogicHandling : MonoBehaviour
             if (returnVal.value == -1)
             {
                 Debug.Log("Master Win!");
+                AudioManager.instance.Play("RightTarget");
                 GameManager.instance.RoundWin();
             }
             else if (returnVal.value == 1)
             {
+                AudioManager.instance.Play("RightTarget");
                 if (returnVal.property == GameManager.instance.GetTotProperty())
                 {
                     Debug.Log("Round Win!!");
@@ -80,6 +83,7 @@ public class ShootAndLogicHandling : MonoBehaviour
             }
             else if(returnVal.value == 0)
             {
+                AudioManager.instance.Play("WrongTarget");
                 switch (returnVal.property) {
                     case 1:
                         Debug.Log("Sex Fails, play master insult, followed by sex line");

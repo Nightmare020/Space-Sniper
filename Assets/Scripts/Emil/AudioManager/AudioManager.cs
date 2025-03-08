@@ -1,16 +1,19 @@
 using UnityEngine.Audio;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
-
     public AudioMixerGroup mixerGroup;
-
     public Sound[] sounds;
 
-    void Awake()
+    [Header("Dialogue Defaults")]
+    public Sound defaultDialogueSound;
+    private Dictionary<string, Dictionary<DialogueType, Sound>> _clientDialogueMap;
+
+    private void Awake()
     {
         if (instance != null)
         {
@@ -22,7 +25,7 @@ public class AudioManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
 
-        foreach (Sound s in sounds)
+        foreach (var s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
@@ -30,11 +33,14 @@ public class AudioManager : MonoBehaviour
 
             s.source.outputAudioMixerGroup = mixerGroup;
         }
+        
+        InitializeDialogueSystem();
+        // Play("Background 1");
     }
 
     public void Play(string sound)
     {
-        Sound s = Array.Find(sounds, item => item.name == sound);
+        var s = Array.Find(sounds, item => item.name == sound);
         if (s == null)
         {
             Debug.LogWarning("Sound: " + name + " not found!");
@@ -45,5 +51,63 @@ public class AudioManager : MonoBehaviour
         s.source.pitch = s.pitch * (1f + UnityEngine.Random.Range(-s.pitchVariance / 2f, s.pitchVariance / 2f));
 
         s.source.Play();
+    }
+    
+    
+    private void InitializeDialogueSystem() {
+        _clientDialogueMap = new Dictionary<string, Dictionary<DialogueType, Sound>>();
+
+        // Load all dialogue audio clips
+        foreach (ClientName client in System.Enum.GetValues(typeof(ClientName))) {
+            string clientPath = $"Sounds/Dialogue/{client}";
+            AudioClip[] clips = Resources.LoadAll<AudioClip>(clientPath);
+
+            var dialogueDict = new Dictionary<DialogueType, Sound>();
+            
+            foreach (var clip in clips) {
+                DialogueType type = ParseDialogueType(clip.name);
+                if (type == DialogueType.None) continue;
+
+                Sound sound = CreateDialogueSound(clip);
+                dialogueDict[type] = sound;
+            }
+
+            _clientDialogueMap[client.ToString()] = dialogueDict;
+        }
+    }
+    
+    private DialogueType ParseDialogueType(string clipName) {
+        string typeString = clipName.Split('_')[1]; // Get part after client name
+        return System.Enum.TryParse(typeString, out DialogueType type) ? type : DialogueType.None;
+    }
+    
+    private Sound CreateDialogueSound(AudioClip clip) {
+        Sound newSound = new Sound {
+            name = clip.name,
+            clip = clip,
+            volume = defaultDialogueSound.volume,
+            pitch = defaultDialogueSound.pitch,
+            volumeVariance = defaultDialogueSound.volumeVariance,
+            pitchVariance = defaultDialogueSound.pitchVariance,
+            loop = false
+        };
+
+        newSound.source = gameObject.AddComponent<AudioSource>();
+        newSound.source.clip = newSound.clip;
+        newSound.source.outputAudioMixerGroup = mixerGroup;
+        
+        return newSound;
+    }
+    
+    public void PlayDialogue(ClientName client, DialogueType type) {
+        string clientKey = client.ToString();
+        if (!_clientDialogueMap.ContainsKey(clientKey)) {
+            Debug.LogError($"No dialogue found for {client}");
+            return;
+        }
+
+        if (_clientDialogueMap[clientKey].TryGetValue(type, out Sound sound)) {
+            sound.source.Play();
+        }
     }
 }

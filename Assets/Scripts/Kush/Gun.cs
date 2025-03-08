@@ -66,6 +66,7 @@ public class Gun : MonoBehaviour
         {
             ShootAndLogicHandling.instance.reloadDebugTxt.text = "Reloading...";
             isReloading = true;
+            AudioManager.instance.Play("Reload");
             StartCoroutine(Reloading());
         }
     }
@@ -80,18 +81,26 @@ public class Gun : MonoBehaviour
 
     public void ShootBullet()
     {
-        if (Time.time >= nextTimeToFire && curAmmo > 0 && !isReloading)
+        if (Time.time >= nextTimeToFire)
         {
             nextTimeToFire = Time.time + 1f / fireRate;
             curAmmo--;
-            AudioManager.instance.Play("SniperShot");
-
-            //Shoot logic
-            if (Physics.Raycast(MouseLookAround.instance.transform.position, MouseLookAround.instance.transform.forward, out RaycastHit hit))
+            
+            if (curAmmo > 0 && !isReloading)
             {
-                Debug.LogError(hit.transform.name);
+                AudioManager.instance.Play("SniperShot");
 
-                ShootAndLogicHandling.instance.ProcessHit(hit);
+                //Shoot logic
+                if (Physics.Raycast(MouseLookAround.instance.transform.position, MouseLookAround.instance.transform.forward, out RaycastHit hit))
+                {
+                    Debug.LogError(hit.transform.name);
+
+                    ShootAndLogicHandling.instance.ProcessHit(hit);
+                }
+            }
+            else
+            {
+                AudioManager.instance.Play("NoAmmo");
             }
         }
         else if(curAmmo <= 0)
