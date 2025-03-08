@@ -109,5 +109,9 @@ public class AudioManager : MonoBehaviour
         if (_clientDialogueMap[clientKey].TryGetValue(type, out Sound sound)) {
             sound.source.Play();
         }
+        else
+        {
+            Debug.LogError("Error playing");
+        }
     }
 }

@@ -41,7 +41,7 @@ public class NPC : NPCProperties
     public void SetTargetNPC()
     {
         properties = GameManager.instance.GetTargetProperties();
-        GetComponent<MeshRenderer>().enabled = true;
+        //GetComponent<MeshRenderer>().enabled = true;
         SetVisuals(properties);
     }
 

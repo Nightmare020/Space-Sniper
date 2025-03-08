@@ -20,6 +20,18 @@ public enum DialogueType {
     None
 }
 
+public enum DescriptionHelper
+{
+    Zero,
+    One,
+    Two,
+    Three,
+    SexClue,
+    RaceClue,
+    HeadHairClue,
+    FacialHairClue
+}
+
 [System.Serializable]
 public class Dialogue {
     [Header("Client")]

@@ -69,12 +69,16 @@ public class ShootAndLogicHandling : MonoBehaviour
             if (returnVal.value == -1)
             {
                 Debug.Log("Master Win!");
-                AudioManager.instance.Play("RightTarget");
+                //We need to play the master win from the client here, but "yay" is also good
+                //AudioManager.instance.Play("RightTarget");
+                AudioManager.instance.PlayDialogue((ClientName)GameManager.instance.GetClientNo(), DialogueType.MasterCorrect);
                 GameManager.instance.RoundWin();
             }
             else if (returnVal.value == 1)
             {
-                AudioManager.instance.Play("RightTarget");
+                //We need to play correct shot from client here, but "yay" is also good
+                //AudioManager.instance.Play("RightTarget");
+                AudioManager.instance.PlayDialogue((ClientName)GameManager.instance.GetClientNo(), DialogueType.CorrectShot);
                 if (returnVal.property == GameManager.instance.GetTotProperty())
                 {
                     Debug.Log("Round Win!!");
@@ -83,22 +87,30 @@ public class ShootAndLogicHandling : MonoBehaviour
             }
             else if(returnVal.value == 0)
             {
-                AudioManager.instance.Play("WrongTarget");
+                //AudioManager.instance.Play("WrongTarget");
                 switch (returnVal.property) {
                     case 1:
                         Debug.Log("Sex Fails, play master insult, followed by sex line");
+                        AudioManager.instance.PlayDialogue((ClientName)GameManager.instance.GetClientNo(), (DialogueType)GameManager.instance.GetTargetProperties().sex);
+                        GameManager.instance.AddPropertyToTargetText(returnVal.property - 1);
                         break;
 
                     case 2:
                         Debug.Log("Race Fails, play race description");
+                        AudioManager.instance.PlayDialogue((ClientName)GameManager.instance.GetClientNo(), (DialogueType)DescriptionHelper.RaceClue);
+                        GameManager.instance.AddPropertyToTargetText(returnVal.property - 1);
                         break;
 
                     case 3:
                         Debug.Log("head hair Fails, play head hair description");
+                        AudioManager.instance.PlayDialogue((ClientName)GameManager.instance.GetClientNo(), (DialogueType)DescriptionHelper.HeadHairClue);
+                        GameManager.instance.AddPropertyToTargetText(returnVal.property - 1);
                         break;
 
                     case 4:
                         Debug.Log("facial hair Fails, play facial hair description");
+                        AudioManager.instance.PlayDialogue((ClientName)GameManager.instance.GetClientNo(), (DialogueType)DescriptionHelper.FacialHairClue);
+                        GameManager.instance.AddPropertyToTargetText(returnVal.property - 1);
                         break;
                 }
             }

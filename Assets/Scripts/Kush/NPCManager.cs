@@ -80,6 +80,15 @@ public class NPCManager : MonoBehaviour
 
             yield return new WaitForSeconds(.2f);
         }
+
+        StartCoroutine(PlaySexDescription());
+    }
+
+    IEnumerator PlaySexDescription()
+    {
+        yield return new WaitForSeconds(2f);
+        AudioManager.instance.PlayDialogue((ClientName)GameManager.instance.GetClientNo(), (DialogueType)DescriptionHelper.SexClue);
+        GameManager.instance.AddPropertyToTargetText(0);
     }
 
     // Update is called once per frame
