@@ -6,15 +6,18 @@ public class MouseLookAround : MonoBehaviour
 {
     public static MouseLookAround instance;
 
-    [Header("Mouse Look variables")]
+    [Header("Mouse variables")]
     [SerializeField] float sensitivity = 10f;
-    [SerializeField] bool lookAllowed = false;
+    [SerializeField] float fov = 60f;
+    [SerializeField] float scopeFactor = 2f;
+    public bool lookAllowed = false;
 
     [Header("Player Reference")]
     [SerializeField] Transform playerTrans;
 
     //internal variables
     private float xRotation = 0;
+    private Camera cam;
 
     private void Awake()
     {
@@ -34,6 +37,8 @@ public class MouseLookAround : MonoBehaviour
         //Remove later (debug only)
         lookAllowed = true;
         Cursor.lockState = CursorLockMode.Locked;
+
+        cam = GetComponent<Camera>();
     }
 
     // Update is called once per frame
@@ -43,8 +48,20 @@ public class MouseLookAround : MonoBehaviour
         {
             ApplyLookAround();
         }
+
     }
 
+    public void ZoomIn(bool b)
+    {
+        if (b)
+        {
+            cam.fieldOfView = fov * 1 / scopeFactor;
+        }
+        else
+        {
+            cam.fieldOfView = fov;
+        }
+    }
     void ApplyLookAround()
     {
         float mouseX = Input.GetAxis("Mouse X") * sensitivity;
