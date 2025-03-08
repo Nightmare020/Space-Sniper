@@ -2,10 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 public class NPCProperties : MonoBehaviour
 {
+    //public static NPCProperties instance;
+
+    //private void Awake()
+    //{
+    //    if (instance == null) instance = this;
+    //    else Destroy(this);
+    //}
+
     public enum Sex
     {
         Male,
@@ -46,6 +53,60 @@ public class NPCProperties : MonoBehaviour
         public FacialHairProperties facialHair;
     }
 
+    public struct CompareReturn
+    {
+        public int property;
+        public int value;
+    }
+
+    public static void SetTargetProperties(List<Properties> targetProperties)
+    {
+        Properties target1 = new()
+        {
+            sex = Sex.Male,
+            race = Races.White,
+            headHair = HeadHairProperties.Blonde,
+            facialHair = FacialHairProperties.Bearded
+        };
+        targetProperties.Add(target1);
+
+        Properties target2 = new()
+        {
+            sex = Sex.Female,
+            race = Races.Hispanic,
+            headHair = HeadHairProperties.Redhead,
+            facialHair = FacialHairProperties.CleanShaven
+        };
+        targetProperties.Add(target2);
+
+        Properties target3 = new()
+        {
+            sex = Sex.Male,
+            race = Races.Asian,
+            headHair = HeadHairProperties.Brunette,
+            facialHair = FacialHairProperties.CleanShaven
+        };
+        targetProperties.Add(target3);
+
+        Properties target4 = new()
+        {
+            sex = Sex.Female,
+            race = Races.White,
+            headHair = HeadHairProperties.Blonde,
+            facialHair = FacialHairProperties.CleanShaven
+        };
+        targetProperties.Add(target4);
+
+        Properties target5 = new()
+        {
+            sex = Sex.Male,
+            race = Races.Black,
+            headHair = HeadHairProperties.Brunette,
+            facialHair = FacialHairProperties.CleanShaven
+        };
+        targetProperties.Add(target5);
+    }
+
     public enum Order
     {
         Sex,
@@ -54,7 +115,7 @@ public class NPCProperties : MonoBehaviour
         FacialHair
     }
 
-    public static Properties SetNPC(int debug = -1, TextMeshProUGUI debugTxt = null)
+    public Properties SetNPC(int debug = -1, TextMeshProUGUI debugTxt = null)
     {
         Properties properties = new()
         {
@@ -81,7 +142,7 @@ public class NPCProperties : MonoBehaviour
         return properties;
     }
 
-    public int CompareProperties(TextMeshProUGUI txt, Properties targetProperty, Properties property, int curProperty, bool print = false)
+    public CompareReturn CompareProperties(TextMeshProUGUI txt, Properties targetProperty, Properties property, int curProperty, bool print = false)
     {
         //Print Logic
         if (print)
@@ -142,14 +203,18 @@ public class NPCProperties : MonoBehaviour
         }
 
         //Compare Logic
-        if (curProperty == 1 && 
+        if (GameManager.instance.GetCurKills() == 1 && 
             (targetProperty.sex == property.sex && 
             targetProperty.race == property.race && 
             targetProperty.headHair == property.headHair && 
             targetProperty.facialHair == property.facialHair))
         {
             txt.text = "You Win! (Very lucky)";
-            return -1;
+            return new CompareReturn()
+            {
+                property = curProperty,
+                value = -1
+            };
         }
 
         switch (curProperty)
@@ -159,12 +224,15 @@ public class NPCProperties : MonoBehaviour
                 {
                     txt.text = "Sex Matches";
                     curProperty++;
-                    GameManager.instance.IncProperty();
                     return CompareProperties(txt, targetProperty, property, curProperty);
                 }
                 else
                 {
-                    return 0;
+                    return new CompareReturn()
+                    {
+                        property = curProperty,
+                        value = 0
+                    };
                 }
 
             case 2:
@@ -172,12 +240,15 @@ public class NPCProperties : MonoBehaviour
                 {
                     txt.text += ", race Matches";
                     curProperty++;
-                    GameManager.instance.IncProperty();
                     return CompareProperties(txt, targetProperty, property, curProperty);
                 }
                 else
                 {
-                    return 0;
+                    return new CompareReturn()
+                    {
+                        property = curProperty,
+                        value = 0
+                    };
                 }
 
             case 3:
@@ -185,12 +256,15 @@ public class NPCProperties : MonoBehaviour
                 {
                     txt.text += ", headHair Matches";
                     curProperty++;
-                    GameManager.instance.IncProperty();
                     return CompareProperties(txt, targetProperty, property, curProperty);
                 }
                 else
                 {
-                    return 0;
+                    return new CompareReturn()
+                    {
+                        property = curProperty,
+                        value = 0
+                    };
                 }
 
             case 4:
@@ -199,23 +273,35 @@ public class NPCProperties : MonoBehaviour
                     if (targetProperty.facialHair == property.facialHair)
                     {
                         txt.text += ", facialHair Matches";
-                        curProperty++;
-                        GameManager.instance.IncProperty();
-                        return 1;
+                        return new CompareReturn()
+                        {
+                            property = curProperty,
+                            value = 1
+                        };
                     }
                     else
                     {
-                        return 0;
+                        return new CompareReturn()
+                        {
+                            property = curProperty,
+                            value = 0
+                        };
                     }
                 }
                 else
                 {
-                    curProperty++;
-                    GameManager.instance.IncProperty();
-                    return 1;
+                    return new CompareReturn()
+                    {
+                        property = curProperty,
+                        value = 1
+                    };
                 }
         }
 
-        return 0;
+        return new CompareReturn()
+        {
+            property = curProperty,
+            value = 0
+        };
     }
 }

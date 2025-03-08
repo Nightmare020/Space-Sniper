@@ -27,7 +27,13 @@ public class NPC : NPCProperties
     public IEnumerator NPCs()
     {
         yield return new WaitForSeconds(.0f);
-        properties = SetNPC();
+        Properties intermediate;
+        do
+        {
+            intermediate = SetNPC();
+        } while (intermediate.Equals(GameManager.instance.GetTargetProperties()));
+
+        properties = intermediate;
         SetVisuals(properties);
     }
 

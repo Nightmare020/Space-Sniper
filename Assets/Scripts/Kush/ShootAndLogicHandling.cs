@@ -59,30 +59,42 @@ public class ShootAndLogicHandling : MonoBehaviour
         if(hit.transform.gameObject.TryGetComponent<NPC>(out NPC npc))
         {
             onHit.Invoke(hit.point);
+
             debugTxt.text = string.Empty;
-            if (npc.CompareProperties(debugTxt,
-                    GameManager.instance.GetTargetProperties(),
-                    npc.properties,
-                    GameManager.instance.GetCurProperty()) == 1)
-            {
-                Debug.Log("Correct Target Hit");
-            }
-            else if (npc.CompareProperties(debugTxt,
-                        GameManager.instance.GetTargetProperties(),
-                        npc.properties,
-                        GameManager.instance.GetCurProperty()) == -1)
+
+            GameManager.instance.AddKill();
+
+            NPCProperties.CompareReturn returnVal = npc.CompareProperties(debugTxt,                GameManager.instance.GetTargetProperties(), npc.properties,              GameManager.instance.GetCurProperty());
+
+            if (returnVal.value == -1)
             {
                 Debug.Log("Master Win!");
             }
-            else
+            else if (returnVal.value == 1)
             {
-                if(GameManager.instance.GetCurProperty() != 1)
+                if (returnVal.property == GameManager.instance.GetTotProperty())
                 {
-                    debugTxt.text += ", but Not correct Target";
+                    Debug.Log("Round Win!!");
                 }
-                else
-                {
-                    debugTxt.text = "Completely Wrong Target";
+            }
+            else if(returnVal.value == 0)
+            {
+                switch (returnVal.property) {
+                    case 1:
+                        Debug.Log("Sex Fails, play master insult, followed by sex line");
+                        break;
+
+                    case 2:
+                        Debug.Log("Race Fails, play race description");
+                        break;
+
+                    case 3:
+                        Debug.Log("head hair Fails, play head hair description");
+                        break;
+
+                    case 4:
+                        Debug.Log("facial hair Fails, play facial hair description");
+                        break;
                 }
             }
 

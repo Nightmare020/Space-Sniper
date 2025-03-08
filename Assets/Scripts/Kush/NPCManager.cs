@@ -37,15 +37,19 @@ public class NPCManager : MonoBehaviour
 
     IEnumerator SpawnNPCs()
     {
+        yield return new WaitForSeconds(2f);
+
         int randomIndex = Random.Range(0, spawnPoints.Length);
         for(int i=0; i < spawnPoints.Length; i++)
         {
-            if (i == randomIndex && !NPCProp.Contains(GameManager.instance.GetTargetProperties()))
+            if (i == randomIndex)
             {
                 var npc = Instantiate(NPCPrefab, spawnPoints[i].position, NPCPrefab.transform.rotation);
                 npc.GetComponent<NPC>().SetTargetNPC();
                 NPCs.Add(npc.transform);
                 NPCProp.Add(npc.GetComponent<NPC>().properties);
+
+                //Debug lines
                 Debug.Log(npc.GetComponent<NPC>().properties.sex);
                 Debug.Log(npc.GetComponent<NPC>().properties.race);
                 Debug.Log(npc.GetComponent<NPC>().properties.headHair);

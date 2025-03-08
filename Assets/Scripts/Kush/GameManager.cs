@@ -16,14 +16,21 @@ public class GameManager : MonoBehaviour
     int totProperty = 4;
 
     [Header("Target Properties")]
-    [SerializeField] NPCProperties.Properties targetProperties;
+    [SerializeField] NPCProperties.Properties curTargetProperties;
+    [SerializeField] List<NPCProperties.Properties> targetProperties;
+
+    [Header("Kill stat")]
+    [SerializeField] private int kills = 0;
 
     [Header("Debug Txt")]
     [SerializeField] TextMeshProUGUI targetPropDebugTxt;
 
+    //Internal Variables
+    List<int> targets = new();
+
     public NPCProperties.Properties GetTargetProperties()
     {
-        return targetProperties;
+        return curTargetProperties;
     }
 
     public int GetCurRound()
@@ -31,9 +38,19 @@ public class GameManager : MonoBehaviour
         return curRound;
     }
 
+    public int GetTotRound()
+    {
+        return totRound;
+    }
+
     public int GetCurProperty()
     {
         return curProperty;
+    }
+
+    public int GetTotProperty()
+    {
+        return totProperty;
     }
 
     public void IncProperty()
@@ -44,7 +61,18 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Round Win!");
             RoundWin();
+            targetPropDebugTxt.text = "You won the Round!";
         }
+    }
+
+    public int GetCurKills()
+    {
+        return kills;
+    }
+
+    public void AddKill()
+    {
+        kills++;
     }
 
     void RoundWin()
@@ -70,17 +98,40 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        targetProperties = NPCProperties.SetNPC(0, targetPropDebugTxt);
+        targetProperties = new List<NPCProperties.Properties>(totRound);
+        NPCProperties.SetTargetProperties(targetProperties);
+        GetNewTarget();
+
 
         //Debug
         //StartCoroutine(Assign());
+    }
+
+    void GetNewTarget()
+    {
+        if (curRound == 1)
+        {
+            curTargetProperties = targetProperties[0];
+            targets.Add(0);
+        }
+        else
+        {
+            int i;
+            do
+            {
+                i = Random.Range(1, targetProperties.Count);
+            } while (targets.Contains(i));
+
+            curTargetProperties = targetProperties[i];
+            targets.Add(i);
+        }
     }
 
     IEnumerator Assign()
     {
         yield return new WaitForSeconds(1f);
         //Debug
-        targetProperties = FindObjectOfType<NPC>().properties;
+        curTargetProperties = FindObjectOfType<NPC>().properties;
         if (targetProperties.Equals(FindObjectOfType<NPC>().properties))
         {
             Debug.LogError("Yay");
