@@ -58,6 +58,7 @@ public class ShootAndLogicHandling : MonoBehaviour
         onShoot.Invoke(hit.point);
         if(hit.transform.gameObject.TryGetComponent<NPC>(out NPC npc))
         {
+            AudioManager.instance.Play("TargetHit");
             onHit.Invoke(hit.point);
             debugTxt.text = string.Empty;
             if (npc.CompareProperties(debugTxt,
@@ -66,6 +67,7 @@ public class ShootAndLogicHandling : MonoBehaviour
                     GameManager.instance.GetCurProperty()) == 1)
             {
                 Debug.Log("Correct Target Hit");
+                AudioManager.instance.Play("RightTarget");
             }
             else if (npc.CompareProperties(debugTxt,
                         GameManager.instance.GetTargetProperties(),
@@ -73,9 +75,11 @@ public class ShootAndLogicHandling : MonoBehaviour
                         GameManager.instance.GetCurProperty()) == -1)
             {
                 Debug.Log("Master Win!");
+                AudioManager.instance.Play("RightTarget");
             }
             else
             {
+                AudioManager.instance.Play("WrongTarget");
                 if(GameManager.instance.GetCurProperty() != 1)
                 {
                     debugTxt.text += ", but Not correct Target";

@@ -1,2 +1,12 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# Enforce LF for ALL text files (override Windows defaults)
+* text=auto eol=lf
+
+# Explicitly handle Unity files
+*.unity text merge=unityyamlmerge
+*.prefab text
+*.asset text
+
+# Binary files (no line ending changes)
+*.png binary
+*.wav binary
+*.fbx binary
