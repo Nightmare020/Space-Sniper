@@ -82,6 +82,7 @@ public class GunProperties : MonoBehaviour
         {
             nextTimeToFire = Time.time + 1f / fireRate;
             curAmmo--;
+            AudioManager.instance.Play("SniperShot");
 
             //Shoot logic
             if (Physics.Raycast(MouseLookAround.instance.transform.position, MouseLookAround.instance.transform.forward, out RaycastHit hit))
