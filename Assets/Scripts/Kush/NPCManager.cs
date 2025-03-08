@@ -13,7 +13,7 @@ public class NPCManager : MonoBehaviour
     //Internal Variables
     private Transform[] spawnPoints;
     private List<Transform> NPCs = new();
-    public List<NPCProperties.Properties> NPCProp = new();
+    private List<NPCProperties.Properties> NPCProp = new();
 
     void Awake()
     {
@@ -32,10 +32,24 @@ public class NPCManager : MonoBehaviour
             spawnPoints[i] = points[i].transform;
         }
 
-        StartCoroutine(SpawnNPCs());
+        //StartCoroutine(SpawnNPCs());
     }
 
-    IEnumerator SpawnNPCs()
+    public void ClearNPCs()
+    {
+        foreach(Transform t in NPCs)
+        {
+            Destroy(t.gameObject);
+        }
+
+        NPCs.Clear();
+        NPCProp.Clear();
+
+        NPCs = new();
+        NPCProp = new();
+    }
+
+    public IEnumerator SpawnNPCs()
     {
         yield return new WaitForSeconds(2f);
 

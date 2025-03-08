@@ -8,8 +8,9 @@ public class ShootAndLogicHandling : MonoBehaviour
 {
     public static ShootAndLogicHandling instance;
 
-    [Header("Gun Reference")]
-    [SerializeField] GunProperties gun;
+    [Header("Gun and Shooting Related")]
+    [SerializeField] Gun gun;
+    public bool shootingAllowed = true;
 
     [Header("UI")]
     public TextMeshProUGUI debugTxt;
@@ -37,19 +38,17 @@ public class ShootAndLogicHandling : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButton("Fire1"))
+        if (shootingAllowed)
         {
-            gun.ShootBullet();
-        }
+            if (Input.GetButton("Fire1"))
+            {
+                gun.ShootBullet();
+            }
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            gun.ReloadGun();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            gun.ScopeIn();
+            if (Input.GetKeyDown(KeyCode.Mouse1))
+            {
+                gun.ScopeIn();
+            }
         }
     }
 
@@ -64,17 +63,19 @@ public class ShootAndLogicHandling : MonoBehaviour
 
             GameManager.instance.AddKill();
 
-            NPCProperties.CompareReturn returnVal = npc.CompareProperties(debugTxt,                GameManager.instance.GetTargetProperties(), npc.properties,              GameManager.instance.GetCurProperty());
+            NPCProperties.CompareReturn returnVal = npc.CompareProperties(debugTxt, GameManager.instance.GetTargetProperties(), npc.properties, GameManager.instance.GetCurProperty());
 
             if (returnVal.value == -1)
             {
                 Debug.Log("Master Win!");
+                GameManager.instance.RoundWin();
             }
             else if (returnVal.value == 1)
             {
                 if (returnVal.property == GameManager.instance.GetTotProperty())
                 {
                     Debug.Log("Round Win!!");
+                    GameManager.instance.RoundWin();
                 }
             }
             else if(returnVal.value == 0)

@@ -22,9 +22,6 @@ public class GameManager : MonoBehaviour
     [Header("Kill stat")]
     [SerializeField] private int kills = 0;
 
-    [Header("Debug Txt")]
-    [SerializeField] TextMeshProUGUI targetPropDebugTxt;
-
     //Internal Variables
     List<int> targets = new();
 
@@ -33,10 +30,7 @@ public class GameManager : MonoBehaviour
         return curTargetProperties;
     }
 
-    public int GetCurRound()
-    {
-        return curRound;
-    }
+    public int GetCurRound() { return curRound; }
 
     public int GetTotRound()
     {
@@ -53,18 +47,6 @@ public class GameManager : MonoBehaviour
         return totProperty;
     }
 
-    public void IncProperty()
-    {
-        if (curProperty < totProperty)
-            curProperty++;
-        else
-        {
-            Debug.Log("Round Win!");
-            RoundWin();
-            targetPropDebugTxt.text = "You won the Round!";
-        }
-    }
-
     public int GetCurKills()
     {
         return kills;
@@ -75,18 +57,41 @@ public class GameManager : MonoBehaviour
         kills++;
     }
 
-    void RoundWin()
+    public void RoundWin()
     {
         if(curRound < totRound)
         {
-            curRound++;
-            curProperty = 1;
+            NextRound();
 
         }
         else
         {
+            GameWin();
             Debug.Log("Game Win");
         }
+    }
+
+    public void RoundLost()
+    {
+        ShootAndLogicHandling.instance.shootingAllowed = false;
+        MouseLookAround.instance.lookAllowed = false;
+        Debug.LogError("ROUND LOST!!");
+    }
+
+    void GameWin()
+    {
+        NPCManager.instance.ClearNPCs();
+        Debug.LogError("GAME WIN!!");
+    }
+
+    void NextRound()
+    {
+        curRound++;
+        curProperty = 1;
+        NPCManager.instance.ClearNPCs();
+        GetNewTarget();
+        SpawnNPC();
+        kills = 0;
     }
 
     private void Awake()
@@ -101,7 +106,7 @@ public class GameManager : MonoBehaviour
         targetProperties = new List<NPCProperties.Properties>(totRound);
         NPCProperties.SetTargetProperties(targetProperties);
         GetNewTarget();
-
+        SpawnNPC();
 
         //Debug
         //StartCoroutine(Assign());
@@ -113,6 +118,7 @@ public class GameManager : MonoBehaviour
         {
             curTargetProperties = targetProperties[0];
             targets.Add(0);
+            
         }
         else
         {
@@ -125,6 +131,11 @@ public class GameManager : MonoBehaviour
             curTargetProperties = targetProperties[i];
             targets.Add(i);
         }
+    }
+
+    void SpawnNPC()
+    {
+        StartCoroutine(NPCManager.instance.SpawnNPCs());
     }
 
     IEnumerator Assign()

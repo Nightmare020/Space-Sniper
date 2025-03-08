@@ -194,7 +194,6 @@ public class NPCProperties : MonoBehaviour
                             txt.text = property.facialHair.ToString();
                         }
                         curProperty++;
-                        GameManager.instance.IncProperty();
                         CompareProperties(txt, property, targetProperty, curProperty);
                         break;
 
