@@ -35,7 +35,7 @@ public class AudioManager : MonoBehaviour
         }
         
         InitializeDialogueSystem();
-        PlayDialogue(ClientName.Client1, DialogueType.FirstTargetClue);
+        // Play("Background 1");
     }
 
     public void Play(string sound)
