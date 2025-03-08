@@ -74,7 +74,7 @@ public class ShootAndLogicHandling : MonoBehaviour
             }
             else if (returnVal.value == 1)
             {
-                AudioManager.instance.Play("WrongTarget");
+                AudioManager.instance.Play("RightTarget");
                 if (returnVal.property == GameManager.instance.GetTotProperty())
                 {
                     Debug.Log("Round Win!!");
@@ -83,6 +83,7 @@ public class ShootAndLogicHandling : MonoBehaviour
             }
             else if(returnVal.value == 0)
             {
+                AudioManager.instance.Play("WrongTarget");
                 switch (returnVal.property) {
                     case 1:
                         Debug.Log("Sex Fails, play master insult, followed by sex line");
