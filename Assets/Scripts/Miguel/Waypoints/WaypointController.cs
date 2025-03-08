@@ -32,6 +32,7 @@ public class WaypointController : MonoBehaviour
         Debug.Log("Entered collider " + other.name);
         if(other.gameObject.transform.parent.TryGetComponent(out NPCAIController npc))
         {
+            if (!npc.IsTarget(transform)) return;
             if (isHidingSpot && npc.CanHide() && TryHide(npc))
             {
                 StartCoroutine(npc.ScheduleDeactivation(deactivationDelay));
@@ -66,11 +67,11 @@ public class WaypointController : MonoBehaviour
     private bool TryHide(NPCAIController npc)
     {
         if(cooldDown) return false;
-        if(!npc.CanHide()) return false;
+        if(!npc.CanHide() || hidingNpcs.Count == capacity) return false;
         if (hidingNpcs != null && hidingNpcs.Count < capacity)
         {
             hidingNpcs.Add(npc);
-            if(hidingNpcs.Count >= capacity) 
+            if(hidingNpcs.Count == capacity)
                 WaypointManager.instance.RemoveWaypoint(this);
             return true;
         }

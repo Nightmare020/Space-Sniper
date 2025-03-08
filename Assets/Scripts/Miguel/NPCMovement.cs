@@ -48,4 +48,9 @@ public class NPCMovement : MonoBehaviour
         agent.isStopped= true;
         agent.velocity = Vector3.zero;
     }
+
+    public bool IsTarget(Transform controller)
+    {
+        return target == controller;
+    }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class NPC : NPCProperties
@@ -8,26 +9,32 @@ public class NPC : NPCProperties
     [Header("NPC Properties")]
     public Properties properties;
 
-    [Header("Debug Txt")]
-    public TextMeshProUGUI propertyDebugTxt;
+    [Header("Visuals")]
+    public GameObject visualsGO;
 
-    [Header("Visual Categories")]
-    public GameObject facialHair;
-    public GameObject race;
-    public GameObject headHair;
-    public GameObject sex;
-    
+    public NPCSprite[] sprites;
+    public NPCOutline[] outlines;
+
+    //Internal Variables
+    private Dictionary<string, SpriteRenderer> nameAndSprites = new();
+    private Dictionary<string, GameObject> nameAndOutlines = new();
 
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     public IEnumerator NPCs()
     {
-        yield return new WaitForSeconds(.0f);
-        properties = SetNPC();
+        yield return new WaitForSeconds(1f);
+        Properties intermediate;
+        do
+        {
+            intermediate = SetNPC();
+        } while (intermediate.Equals(GameManager.instance.GetTargetProperties()));
+
+        properties = intermediate;
         SetVisuals(properties);
     }
 
@@ -46,9 +53,29 @@ public class NPC : NPCProperties
 
     public void SetVisuals(Properties properties)
     {
-        facialHair.transform.GetChild((int)properties.facialHair + 1).gameObject.SetActive(true);
-        race.transform.GetChild((int)properties.race + 1).gameObject.SetActive(true);
-        headHair.transform.GetChild((int)properties.headHair + 1).gameObject.SetActive(true);
-        sex.transform.GetChild((int)properties.sex + 1).gameObject.SetActive(true);
+        sprites = visualsGO.GetComponentsInChildren<NPCSprite>(true);
+        outlines = visualsGO.GetComponentsInChildren<NPCOutline>(true);
+        foreach (var sprite in sprites)
+        {
+            nameAndSprites.Add(sprite.transform.name, sprite.GetComponent<SpriteRenderer>());
+        }
+        foreach (var outline in outlines)
+        {
+            nameAndOutlines.Add(outline.transform.name, outline.gameObject);
+        }
+
+        if (properties.sex == Sex.Male)
+        {
+            if(nameAndOutlines.ContainsKey("MaleOutline")) nameAndOutlines["MaleOutline"].gameObject.SetActive(true);
+        }else if(properties.sex == Sex.Female)
+        {
+            if(nameAndOutlines.ContainsKey("FemaleOutline")) nameAndOutlines["FemaleOutline"].gameObject.SetActive(true);
+        }
+
+        string name = properties.sex.ToString() + properties.race.ToString() + properties.headHair.ToString() + properties.facialHair.ToString();
+        if (nameAndSprites.ContainsKey(name))
+            visualsGO.GetComponent<SpriteRenderer>().sprite = nameAndSprites[name].sprite;
+        else
+            Debug.LogError(name + " doesnt exist in the dictionary");
     }
 }
