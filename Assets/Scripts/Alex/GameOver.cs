@@ -64,8 +64,11 @@ public class GameOver : MonoBehaviour
 
     public void ShowSettings()
     {
+        Debug.Log("Setting!");
         gameOverMenuPanel.SetActive(false);
         settingsPanel.SetActive(true);
+        SettingsMenu.Instance.isInSettings = true;
+        SettingsMenu.Instance.cameFromGameOver = true;
     }
 
     /** QUIT GAME **/

@@ -59,6 +59,8 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenuPanel.SetActive(false);
         settingsPanel.SetActive(true);
+        SettingsMenu.Instance.isInSettings = true;
+        SettingsMenu.Instance.cameFromPause = true;
     }
 
     public void QuitGame()

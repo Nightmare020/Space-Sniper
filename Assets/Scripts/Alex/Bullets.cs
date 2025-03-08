@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,9 +10,14 @@ public class Bullets : MonoBehaviour
     // Array to hold the bullet GameObjects
     public GameObject[] bulletImages;
 
+    // Event to notify when bullets ran out
+    public event Action OnBulletsRanOut;
+
     private void Awake()
     {
-        if (Instance == null)
+        Debug.Log("Merica");
+        Instance = this;
+        /*if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
@@ -19,7 +25,7 @@ public class Bullets : MonoBehaviour
         else
         {
             Destroy(gameObject);
-        }
+        }*/
     }
 
     public void BulletShooted()
@@ -37,10 +43,17 @@ public class Bullets : MonoBehaviour
             List<GameObject> bulletList = new List<GameObject>(bulletImages);
             bulletList.RemoveAt(bulletList.Count - 1);
             bulletImages = bulletList.ToArray();
+
+            // Check if the there are no bullets left
+            if (!BulletsLeft())
+            {
+                Debug.Log("No bullets left");
+                OnBulletsRanOut?.Invoke();
+            }
         }
     }
 
-    public bool CheckIfBulletsLeft()
+    public bool BulletsLeft()
     {
         // Check if there are any bullets left
         if (bulletImages.Length > 0)

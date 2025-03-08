@@ -37,7 +37,7 @@ public class StartMenu : MonoBehaviour
         float elapsedTime = 0f;
 
         // DUration of zoom effect
-        float duration = 1f;
+        float duration = 0.5f;
 
         while (elapsedTime < duration)
         {
@@ -61,6 +61,8 @@ public class StartMenu : MonoBehaviour
     {
         startMenuPanel.SetActive(false);
         settingsPanel.SetActive(true);
+        SettingsMenu.Instance.isInSettings = true;
+        SettingsMenu.Instance.cameFromStart = true;
     }
 
     /** QUIT GAME **/
