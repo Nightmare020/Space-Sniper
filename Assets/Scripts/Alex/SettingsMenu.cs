@@ -51,6 +51,7 @@ public class SettingsMenu : MonoBehaviour
         }
         else if (cameFromPause)
         {
+            SniperMove.Instance.isInGame = true;
             GoBackToPause();
         }
         else if (cameFromGameOver)

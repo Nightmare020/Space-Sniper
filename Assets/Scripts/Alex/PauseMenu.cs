@@ -22,7 +22,7 @@ public class PauseMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (SniperMove.Instance.isInGame && Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPaused)
             {
@@ -59,6 +59,7 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenuPanel.SetActive(false);
         settingsPanel.SetActive(true);
+        SniperMove.Instance.isInGame = false;
         SettingsMenu.Instance.isInSettings = true;
         SettingsMenu.Instance.cameFromPause = true;
     }

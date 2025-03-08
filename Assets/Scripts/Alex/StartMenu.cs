@@ -51,6 +51,7 @@ public class StartMenu : MonoBehaviour
         // Enable sniper HUD and start the game
         sniperHUD.SetActive(true);
         startMenuPanel.SetActive(false);
+        SniperMove.Instance.isInGame = true;
 
         // Call the StartGame method in SniperMove to hide and lock the cursor
         SniperMove.Instance.StartGame();

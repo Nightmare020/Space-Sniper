@@ -37,6 +37,9 @@ public class GameOver : MonoBehaviour
 
     private IEnumerator GameOverSequence()
     {
+        // Stop the game loop
+        SniperMove.Instance.isInGame = false;
+
         // Show the game over text
         gameOverText.SetActive(true);
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,7 @@ public class SniperMove : MonoBehaviour
     private float rotationX = 0f;
     private float rotationY = 0f;
     private bool canMove = true;
+    [NonSerialized] public bool isInGame = false;
 
     private void Awake()
     {
@@ -26,14 +28,6 @@ public class SniperMove : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        // Hide the cursor and lock it to the center of the screen
-        //Cursor.lockState = CursorLockMode.None;
-        //Cursor.visible = true;
     }
 
     // Update is called once per frame
