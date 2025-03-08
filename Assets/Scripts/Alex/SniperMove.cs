@@ -13,6 +13,7 @@ public class SniperMove : MonoBehaviour
 
     private float rotationX = 0f;
     private float rotationY = 0f;
+    private bool canMove = true;
 
     private void Awake()
     {
@@ -31,23 +32,43 @@ public class SniperMove : MonoBehaviour
     void Start()
     {
         // Hide the cursor and lock it to the center of the screen
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.None;
+        //Cursor.visible = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
+        if (canMove && Cursor.lockState == CursorLockMode.Locked)
+        {
+            float mouseX = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
+            float mouseY = Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
 
-        rotationX += mouseX;
-        rotationY -= mouseY;
+            rotationX += mouseX;
+            rotationY -= mouseY;
 
-        // Clamp the position to the specified limits
-        rotationY = Mathf.Clamp(rotationY, minRotation.x, maxRotation.x);
-        rotationX= Mathf.Clamp(rotationX, minRotation.y, maxRotation.y);
-        
-        sniperView.transform.localRotation = Quaternion.Euler(rotationY, rotationX, 0f);
+            // Clamp the position to the specified limits
+            rotationY = Mathf.Clamp(rotationY, minRotation.x, maxRotation.x);
+            rotationX = Mathf.Clamp(rotationX, minRotation.y, maxRotation.y);
+
+            sniperView.transform.localRotation = Quaternion.Euler(rotationY, rotationX, 0f);
+        }
+    }
+
+    public void EnableMovement()
+    {
+        canMove = true;
+    }
+
+    public void DisableMovement()
+    {
+        canMove = false;
+    }
+
+    public void StartGame()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        EnableMovement();
     }
 }

@@ -1,12 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameOver : MonoBehaviour
 {
     public static GameOver Instance { get; private set; }
     public GameObject gameOverText;
-    public GameObject gameOverMenu;
+
+    public GameObject gameOverMenuPanel;
+    public GameObject settingsPanel;
+    public GameObject startMenuPanel;
+    public GameObject sniperHUD;
 
     // Duration to show the game over text
     public float gameOverDuration = 3f;
@@ -39,7 +45,7 @@ public class GameOver : MonoBehaviour
 
         // Show the game over menu
         gameOverText.SetActive(false);
-        gameOverMenu.SetActive(true);
+        gameOverMenuPanel.SetActive(true);
 
         // Show the cursir and unlock it
         Cursor.lockState = CursorLockMode.None;
@@ -47,5 +53,28 @@ public class GameOver : MonoBehaviour
 
         // Disable camera movement
         SniperMove.Instance.enabled = false;
+    }
+
+    /** RETRY GAME **/
+    public void RetryGame()
+    {
+        // Reload the current scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void ShowSettings()
+    {
+        gameOverMenuPanel.SetActive(false);
+        settingsPanel.SetActive(true);
+    }
+
+    /** QUIT GAME **/
+    public void QuitGame()
+    {
+        Time.timeScale = 1f;
+        SniperMove.Instance.DisableMovement();
+        startMenuPanel.SetActive(true);
+        gameOverMenuPanel.SetActive(false);
+        sniperHUD.SetActive(false);
     }
 }
