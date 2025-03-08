@@ -361,6 +361,15 @@ MonoBehaviour:
   gun: {fileID: 4254556226020757643}
   debugTxt: {fileID: 659949118}
   reloadDebugTxt: {fileID: 1847702758}
+  onShoot:
+    m_PersistentCalls:
+      m_Calls: []
+  onHit:
+    m_PersistentCalls:
+      m_Calls: []
+  onMiss:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &137625350
 GameObject:
   m_ObjectHideFlags: 0
