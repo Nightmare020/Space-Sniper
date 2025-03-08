@@ -7,13 +7,34 @@ public class WaypointManager : MonoBehaviour
     public static WaypointManager instance;
 
     [SerializeField] private List<WaypointController> waypoints = new List<WaypointController>();
+    [SerializeField] private List<WaypointController> _disabledWaypoints = new List<WaypointController>();
     private void Awake()
     {
         instance = this;
-    }
-    void Start()
-    {
         waypoints.AddRange(FindObjectsByType<WaypointController>(FindObjectsSortMode.None));
+    }
+    
+    public void CheckScares(Vector3 point)
+    {
+        List<WaypointController> wps = new List<WaypointController>();
+        foreach(WaypointController w in waypoints)
+        {
+            if (w.IsHidingSpot())
+            {
+                wps.Add(w);
+            }
+        }
+        foreach (WaypointController w in _disabledWaypoints)
+        {
+            if (w.IsHidingSpot())
+            {
+                wps.Add(w);
+            }
+        }
+        foreach (WaypointController w in wps)
+        {
+            w.ScareNpcs(point);
+        }
     }
 
     public WaypointController GetRandomWaypoint()
@@ -34,10 +55,12 @@ public class WaypointManager : MonoBehaviour
     public void RemoveWaypoint(WaypointController wp)
     {
         waypoints.Remove(wp);
+        _disabledWaypoints.Add(wp);
     }
     public void AddWaypoint(WaypointController wp)
     {
         if(waypoints.Contains(wp)) return;
         waypoints.Add(wp);
+        if(_disabledWaypoints.Contains(wp)) _disabledWaypoints.Remove(wp);
     }
 }

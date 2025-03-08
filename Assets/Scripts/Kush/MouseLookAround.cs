@@ -47,8 +47,8 @@ public class MouseLookAround : MonoBehaviour
 
     void ApplyLookAround()
     {
-        float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
+        float mouseX = Input.GetAxis("Mouse X") * sensitivity;
+        float mouseY = Input.GetAxis("Mouse Y") * sensitivity;
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -60, 60);
 

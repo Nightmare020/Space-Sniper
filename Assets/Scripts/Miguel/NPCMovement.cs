@@ -12,9 +12,10 @@ public class NPCMovement : MonoBehaviour
 
     private NavMeshAgent agent;
     private Transform _target;
-    void Start()
+    public void Init()
     {
         agent= GetComponent<NavMeshAgent>();
+        target = WaypointManager.instance.GetRandomWaypoint().transform;
     }
 
     // Update is called once per frame
@@ -34,12 +35,13 @@ public class NPCMovement : MonoBehaviour
 
     public void ChageTarget(Transform newTarget)
     {
-        StartAgent();
         target = newTarget;
+        StartAgent();
     }
     public void StartAgent()
     {
         agent.isStopped = false;
+        agent.ResetPath();
     }
     public void StopAgent()
     {

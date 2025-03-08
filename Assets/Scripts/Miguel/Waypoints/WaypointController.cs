@@ -12,61 +12,90 @@ public class WaypointController : MonoBehaviour
     [SerializeField] private bool isHidingSpot;
     [SerializeField] private int capacity;
     [SerializeField] private float deactivationDelay;
-    [SerializeField] private Vector3 scareArea;
+    [SerializeField] private float scareRadius;
+    [SerializeField] private float hideCooldown;
 
+    [SerializeField]private bool cooldDown = false;
 
     WaypointController[] _ta = new WaypointController [1];
 
     [Header("Debug")]
     [SerializeField] private List<NPCAIController> hidingNpcs;
 
+    private BoxCollider col;
+    private void Start()
+    {
+        col= GetComponent<BoxCollider>();
+    }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.TryGetComponent(out NPCAIController npc))
+        Debug.Log("Entered collider " + other.name);
+        if(other.gameObject.transform.parent.TryGetComponent(out NPCAIController npc))
         {
-            if (isHidingSpot && !TryHide(npc))
+            if (isHidingSpot && npc.CanHide() && TryHide(npc))
             {
-                _ta[0] = this;
-                npc.ChangeTarget(WaypointManager.instance.GetRandomWaypoint(_ta).transform);
+                StartCoroutine(npc.ScheduleDeactivation(deactivationDelay));
             }
             else
             {
-                StartCoroutine(npc.ScheduleDeactivation(deactivationDelay));
+                _ta[0] = this;
+                npc.ChangeTarget(WaypointManager.instance.GetRandomWaypoint(_ta).transform);
             }
         }
     }
 
     public void ScareNpcs(Vector3 bullethitpos)
     {
-       
+        if (Vector3.Distance(bullethitpos, transform.position) > scareRadius) return;
+       foreach(NPCAIController npc in hidingNpcs)
+        {
+            npc.ChangeTarget(WaypointManager.instance.GetRandomWaypoint(_ta).transform);
+        }
+       hidingNpcs.Clear();
+        StartCoroutine(Cooldown());
+        WaypointManager.instance.AddWaypoint(this);
+    }
+
+    private IEnumerator Cooldown()
+    {
+        cooldDown = true;
+        yield return new WaitForSeconds(hideCooldown);
+        cooldDown = false;
     }
 
     private bool TryHide(NPCAIController npc)
     {
+        if(cooldDown) return false;
+        if(!npc.CanHide()) return false;
         if (hidingNpcs != null && hidingNpcs.Count < capacity)
         {
             hidingNpcs.Add(npc);
+            if(hidingNpcs.Count >= capacity) 
+                WaypointManager.instance.RemoveWaypoint(this);
             return true;
         }
         return false;
     }
 
+    public bool IsHidingSpot()
+    {
+        return isHidingSpot;
+    }
 
 #if UNITY_EDITOR
     [SerializeField] private bool drawDebugArea;
     private void OnDrawGizmosSelected()
     {
+        if(col == null) col = GetComponent<BoxCollider>();
         if (drawDebugArea)
         {
-            Gizmos.color = new Color(0, 0, 1, 1f);
-            Gizmos.DrawWireCube(transform.position, waypointTriggerArea);
-            Gizmos.color = new Color(0, 0, 1, 0.2f);
-            Gizmos.DrawCube(transform.position, waypointTriggerArea);
+            Gizmos.color = new Color(0, 0, 1, 0.5f);
+            Gizmos.DrawCube(transform.position, col.size);
 
             Gizmos.color = new Color(1, 0, 0, 1f);
-            Gizmos.DrawWireCube(transform.position, scareArea);
+            Gizmos.DrawWireSphere(transform.position, scareRadius);
             Gizmos.color = new Color(1, 0, 0, 0.2f);
-            Gizmos.DrawCube(transform.position, scareArea);
+            Gizmos.DrawSphere(transform.position, scareRadius);
         }
     }
 #endif
