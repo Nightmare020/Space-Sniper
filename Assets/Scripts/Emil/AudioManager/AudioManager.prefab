@@ -1,0 +1,230 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3008041730285810993
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 747854021789804393}
+  - component: {fileID: 2085861449207503997}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &747854021789804393
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3008041730285810993}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.8121309, y: 3.5834165, z: -2.534586}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2085861449207503997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3008041730285810993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 972321688f9410c44a3b2e5aee9692cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mixerGroup: {fileID: 0}
+  sounds:
+  - name: SniperShot
+    clip: {fileID: 8300000, guid: fda4519f8d0ef5e4d82677ea64db5b76, type: 3}
+    volume: 0.1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: Reload
+    clip: {fileID: 8300000, guid: 1d2289a71d5ffdd429a7383193fc67bd, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: TargetHit
+    clip: {fileID: 8300000, guid: 0c536e5d0a8037f4293442b55171090e, type: 3}
+    volume: 0.15
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: WrongTarget
+    clip: {fileID: 8300000, guid: a0a7f189b1d88104bb15c36480d0a3b6, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: RightTarget
+    clip: {fileID: 8300000, guid: ab7dfb548cfa4ce4ab00d1de60ff92d3, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: NoAmmo
+    clip: {fileID: 8300000, guid: cf97efb9e4c476f46a7d757464d4349d, type: 3}
+    volume: 0.1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: Panic
+    clip: {fileID: 8300000, guid: b43fa56000008854b96d918be49dca6a, type: 3}
+    volume: 0.5
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: Intro
+    clip: {fileID: 8300000, guid: cde3886f32499034aaeb7ce5946cbb81, type: 3}
+    volume: 0.5
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: Background 1
+    clip: {fileID: 8300000, guid: a5f653468f97a2a45a9a39fdec2d8195, type: 3}
+    volume: 0.2
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: Background 2
+    clip: {fileID: 8300000, guid: c80947c89af86424cb65bdd2aa520862, type: 3}
+    volume: 0.5
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  clientDialogues:
+  - client: 0
+    masterInsult:
+      name: 
+      clip: {fileID: 0}
+      volume: 0
+      volumeVariance: 0
+      pitch: 0
+      pitchVariance: 0
+      loop: 0
+      mixerGroup: {fileID: 0}
+      source: {fileID: 0}
+    followingMaleInsult:
+      name: 
+      clip: {fileID: 0}
+      volume: 0
+      volumeVariance: 0
+      pitch: 0
+      pitchVariance: 0
+      loop: 0
+      mixerGroup: {fileID: 0}
+      source: {fileID: 0}
+    followingFemaleInsult:
+      name: 
+      clip: {fileID: 0}
+      volume: 0
+      volumeVariance: 0
+      pitch: 0
+      pitchVariance: 0
+      loop: 0
+      mixerGroup: {fileID: 0}
+      source: {fileID: 0}
+    correctShot:
+      name: 
+      clip: {fileID: 0}
+      volume: 0
+      volumeVariance: 0
+      pitch: 0
+      pitchVariance: 0
+      loop: 0
+      mixerGroup: {fileID: 0}
+      source: {fileID: 0}
+    masterShot:
+      name: 
+      clip: {fileID: 0}
+      volume: 0
+      volumeVariance: 0
+      pitch: 0
+      pitchVariance: 0
+      loop: 0
+      mixerGroup: {fileID: 0}
+      source: {fileID: 0}
+    firstTargetClue:
+      name: 
+      clip: {fileID: 0}
+      volume: 0
+      volumeVariance: 0
+      pitch: 0
+      pitchVariance: 0
+      loop: 0
+      mixerGroup: {fileID: 0}
+      source: {fileID: 0}
+    secondTargetClue:
+      name: 
+      clip: {fileID: 0}
+      volume: 0
+      volumeVariance: 0
+      pitch: 0
+      pitchVariance: 0
+      loop: 0
+      mixerGroup: {fileID: 0}
+      source: {fileID: 0}
+    thirdTargetClue:
+      name: 
+      clip: {fileID: 0}
+      volume: 0
+      volumeVariance: 0
+      pitch: 0
+      pitchVariance: 0
+      loop: 0
+      mixerGroup: {fileID: 0}
+      source: {fileID: 0}
+    fourthTargetClue:
+      name: 
+      clip: {fileID: 0}
+      volume: 0
+      volumeVariance: 0
+      pitch: 0
+      pitchVariance: 0
+      loop: 0
+      mixerGroup: {fileID: 0}
+      source: {fileID: 0}
