@@ -10,7 +10,7 @@ public class ShootAndLogicHandling : MonoBehaviour
 
     [Header("Gun and Shooting Related")]
     [SerializeField] Gun gun;
-    public bool shootingAllowed = true;
+    public bool shootingAllowed = false;
 
     [Header("UI")]
     public TextMeshProUGUI debugTxt;
@@ -126,7 +126,8 @@ public class ShootAndLogicHandling : MonoBehaviour
         {
             AudioManager.instance.PlayDialogue((ClientName)GameManager.instance.GetClientNo(), d);
         }
-        yield return new WaitForSeconds(AudioManager.instance.GetDialogueDuration((ClientName)GameManager.instance.GetClientNo(), d));
         GameManager.instance.RoundWin();
+        //yield return new WaitForSeconds(AudioManager.instance.GetDialogueDuration((ClientName)GameManager.instance.GetClientNo(), d));
+        
     }
 }

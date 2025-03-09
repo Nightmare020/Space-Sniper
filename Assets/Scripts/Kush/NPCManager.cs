@@ -89,6 +89,9 @@ public class NPCManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         AudioManager.instance.PlayDialogue((ClientName)GameManager.instance.GetClientNo(), (DialogueType)DescriptionHelper.SexClue);
         GameManager.instance.AddPropertyToTargetText(0);
+        StartCoroutine(GameManager.instance.Fade(1, 0, 1.5f));
+        ShootAndLogicHandling.instance.shootingAllowed = true;
+        MouseLookAround.instance.lookAllowed = true;
     }
 
     // Update is called once per frame

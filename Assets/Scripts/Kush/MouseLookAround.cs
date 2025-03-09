@@ -34,10 +34,6 @@ public class MouseLookAround : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Remove later (debug only)
-        lookAllowed = true;
-        Cursor.lockState = CursorLockMode.Locked;
-
         cam = GetComponent<Camera>();
     }
 
@@ -49,6 +45,20 @@ public class MouseLookAround : MonoBehaviour
             ApplyLookAround();
         }
 
+    }
+
+    public void SetMouseLock(bool state = true)
+    {
+        if (state)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 
     public void ZoomIn(bool b)

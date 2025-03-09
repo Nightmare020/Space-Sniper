@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -27,9 +29,71 @@ public class GameManager : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private TextMeshProUGUI targetText;
+    [SerializeField] private Image fadeImage;
+    [SerializeField] private GameObject finalScreen;
 
     //Internal Variables
     List<int> targets = new();
+
+    public void PlayAgain()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void PlayGame()
+    {
+        MouseLookAround.instance.SetMouseLock();
+        MouseLookAround.instance.lookAllowed = true;
+        ShootAndLogicHandling.instance.shootingAllowed = true;
+
+        targetProperties = new List<NPCProperties.Properties>(totRound);
+        NPCProperties.SetTargetProperties(targetProperties);
+        GetNewTarget();
+        SpawnNPC();
+    }
+
+    public IEnumerator Fade(float startAlpha, float endAlpha, float fadeDuration, bool clear = false, bool end = false)
+    {
+        var textMeshChild = fadeImage.gameObject.GetComponentInChildren<TextMeshProUGUI>();
+
+        if (end)
+        {
+            textMeshChild.text = "";
+        }
+
+        Color textColor = textMeshChild.color;
+        textColor.a = startAlpha;
+        textMeshChild.color = textColor;
+        float elapsedTime = 0f;
+        Color color = fadeImage.color;
+
+        while (elapsedTime < fadeDuration)
+        {
+            color.a = Mathf.Lerp(startAlpha, endAlpha, elapsedTime / fadeDuration);
+            textColor.a = Mathf.Lerp(startAlpha, endAlpha, elapsedTime / fadeDuration);
+            fadeImage.color = color;
+            textMeshChild.color = textColor;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        color.a = endAlpha;
+        textColor.a = endAlpha;
+        fadeImage.color = color;
+        textMeshChild.color = textColor;
+
+        if (clear)
+        {
+            NPCManager.instance.ClearNPCs();
+            SpawnNPC();
+        }
+
+        if (end)
+        {
+            finalScreen.SetActive(true);
+            MouseLookAround.instance.SetMouseLock(false);
+        }
+    }
 
     public NPCProperties.Properties GetTargetProperties()
     {
@@ -70,7 +134,8 @@ public class GameManager : MonoBehaviour
         if(curRound < totRound)
         {
             NextRound();
-
+            ShootAndLogicHandling.instance.shootingAllowed = false;
+            MouseLookAround.instance.lookAllowed = false;
         }
         else
         {
@@ -88,9 +153,18 @@ public class GameManager : MonoBehaviour
 
     void GameWin()
     {
-        NPCManager.instance.ClearNPCs();
         Debug.LogError("GAME WIN!!");
         targetText.text = "GAME WIN!";
+        StartCoroutine(PlayWinSounds());
+    }
+
+    IEnumerator PlayWinSounds()
+    {
+        StartCoroutine(Fade(0, 1, AudioManager.instance.GetDialogueDuration((ClientName)clientNo, DialogueType.CorrectShot), false, true));
+        ShootAndLogicHandling.instance.shootingAllowed = false;
+        MouseLookAround.instance.lookAllowed = false;
+        yield return new WaitForSeconds(AudioManager.instance.GetDialogueDuration((ClientName)clientNo, DialogueType.CorrectShot));
+        NPCManager.instance.ClearNPCs();
         AudioManager.instance.Stop("Background 1");
         AudioManager.instance.Play("Outro");
     }
@@ -98,12 +172,12 @@ public class GameManager : MonoBehaviour
     void NextRound()
     {
         targetText.text = "ROUND WIN!";
-
+        StartCoroutine(Fade(0, 1, 
+            AudioManager.instance.GetDialogueDuration((ClientName)clientNo, DialogueType.CorrectShot), 
+            true));
         curRound++;
         curProperty = 1;
-        NPCManager.instance.ClearNPCs();
         GetNewTarget();
-        SpawnNPC();
         kills = 0;
     }
 
@@ -116,10 +190,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        targetProperties = new List<NPCProperties.Properties>(totRound);
-        NPCProperties.SetTargetProperties(targetProperties);
-        GetNewTarget();
-        SpawnNPC();
+        
 
         //Debug
         //StartCoroutine(Assign());
@@ -184,22 +255,5 @@ public class GameManager : MonoBehaviour
     void SpawnNPC()
     {
         StartCoroutine(NPCManager.instance.SpawnNPCs());
-    }
-
-    IEnumerator Assign()
-    {
-        yield return new WaitForSeconds(1f);
-        //Debug
-        curTargetProperties = FindObjectOfType<NPC>().properties;
-        if (targetProperties.Equals(FindObjectOfType<NPC>().properties))
-        {
-            Debug.LogError("Yay");
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
