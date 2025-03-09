@@ -59,23 +59,25 @@ public class NPCManager : MonoBehaviour
             if (i == randomIndex)
             {
                 var npc = Instantiate(NPCPrefab, spawnPoints[i].position, NPCPrefab.transform.rotation);
-                npc.GetComponent<NPC>().SetTargetNPC();
+                npc.GetComponentInChildren<NPC>().SetTargetNPC();
                 NPCs.Add(npc.transform);
-                NPCProp.Add(npc.GetComponent<NPC>().properties);
+                NPCProp.Add(npc.GetComponentInChildren<NPC>().properties);
 
                 //Debug lines
-                Debug.Log(npc.GetComponent<NPC>().properties.sex);
-                Debug.Log(npc.GetComponent<NPC>().properties.race);
-                Debug.Log(npc.GetComponent<NPC>().properties.headHair);
-                Debug.Log(npc.GetComponent<NPC>().properties.facialHair);
+                Debug.Log(npc.GetComponentInChildren<NPC>().properties.sex);
+                Debug.Log(npc.GetComponentInChildren<NPC>().properties.race);
+                Debug.Log(npc.GetComponentInChildren<NPC>().properties.headHair);
+                Debug.Log(npc.GetComponentInChildren<NPC>().properties.facialHair);
                 //Debug.Log(NPCProp.Contains(GameManager.instance.GetTargetProperties()));
             }
             else
             {
                 var npc = Instantiate(NPCPrefab, spawnPoints[i].position, NPCPrefab.transform.rotation);
-                StartCoroutine(npc.GetComponent<NPC>().NPCs());
+                NPC t = npc.GetComponentInChildren<NPC>();
+                Debug.Log(t);
+                StartCoroutine(t.NPCs());
                 NPCs.Add(npc.transform);
-                NPCProp.Add(npc.GetComponent<NPC>().properties);
+                NPCProp.Add(npc.GetComponentInChildren<NPC>().properties);
             }
 
             yield return new WaitForSeconds(.2f);

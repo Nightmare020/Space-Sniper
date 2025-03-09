@@ -23,6 +23,11 @@ public class PanicController : MonoBehaviour
         controller = GetComponent<NPCAIController>();
         anim_Controller = GetComponent<NPCAnimationController>();
         ChangePanicBehaviour();
+        if (PanicManager.instance != null)
+        {
+            PanicManager.instance.AddController(this);
+        }
+        else Debug.LogWarning("No Panic manager in scene");
     }
 
     private void Update()

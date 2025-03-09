@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PanicManager : MonoBehaviour
 {
-    private List<PanicController> panicControllers;
-    void Start()
+    public static PanicManager instance;
+    private List<PanicController> panicControllers = new List<PanicController>();
+    private void Awake()
     {
-        panicControllers = new List<PanicController>(FindObjectsByType<PanicController>(FindObjectsSortMode.None));
+        instance = this;
     }
-
     public void IncreaseGeneralPanicLevel()
     {
         for(int i = 0; i < panicControllers.Count;i++)
@@ -19,6 +19,10 @@ public class PanicManager : MonoBehaviour
             else
                 panicControllers.RemoveAt(i);
         }
-        
+    }
+
+    public void AddController(PanicController controller)
+    {
+        panicControllers.Add(controller);
     }
 }
