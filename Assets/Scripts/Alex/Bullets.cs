@@ -15,9 +15,7 @@ public class Bullets : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("Merica");
-        Instance = this;
-        /*if (Instance == null)
+        if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
@@ -25,7 +23,7 @@ public class Bullets : MonoBehaviour
         else
         {
             Destroy(gameObject);
-        }*/
+        }
     }
 
     public void BulletShooted()
@@ -47,7 +45,6 @@ public class Bullets : MonoBehaviour
             // Check if the there are no bullets left
             if (!BulletsLeft())
             {
-                Debug.Log("No bullets left");
                 OnBulletsRanOut?.Invoke();
             }
         }

@@ -12,6 +12,7 @@ public class GameOver : MonoBehaviour
     public GameObject gameOverMenuPanel;
     public GameObject settingsPanel;
     public GameObject startMenuPanel;
+    public GameObject quitGamePanel;
     public GameObject sniperHUD;
 
     // Duration to show the game over text
@@ -75,12 +76,24 @@ public class GameOver : MonoBehaviour
     }
 
     /** QUIT GAME **/
-    public void QuitGame()
+    public void PressQuit()
+    {
+        gameOverMenuPanel.SetActive(false);
+        quitGamePanel.SetActive(true);
+    }
+
+    public void CancelQuit()
+    {
+        quitGamePanel.SetActive(false);
+        gameOverMenuPanel.SetActive(true);
+    }
+
+    public void AcceptQuit()
     {
         Time.timeScale = 1f;
         SniperMove.Instance.DisableMovement();
         startMenuPanel.SetActive(true);
-        gameOverMenuPanel.SetActive(false);
+        quitGamePanel.SetActive(false);
         sniperHUD.SetActive(false);
     }
 }

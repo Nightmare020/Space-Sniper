@@ -7,6 +7,7 @@ public class StartMenu : MonoBehaviour
 {
     public GameObject startMenuPanel;
     public GameObject settingsPanel;
+    public GameObject quitGamePanel;
     public Camera mainCamera;
     public GameObject sniperHUD;
     public float zoomedOutFOV = 60f;
@@ -67,7 +68,19 @@ public class StartMenu : MonoBehaviour
     }
 
     /** QUIT GAME **/
-    public void QuitGame()
+    public void PressQuit()
+    {
+        startMenuPanel.SetActive(false);
+        quitGamePanel.SetActive(true);
+    }
+
+    public void CancelQuit()
+    {
+        quitGamePanel.SetActive(false);
+        startMenuPanel.SetActive(true);
+    }
+
+    public void AcceptQuit()
     {
 #if UNITY_EDITOR
         EditorApplication.isPlaying = false;

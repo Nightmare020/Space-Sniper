@@ -8,6 +8,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject settingsPanel;
     public GameObject startMenuPanel;
     public GameObject sniperHUD;
+    public GameObject quitGamePanel;
 
     public Camera mainCamera;
     private bool isPaused = false;
@@ -64,12 +65,24 @@ public class PauseMenu : MonoBehaviour
         SettingsMenu.Instance.cameFromPause = true;
     }
 
-    public void QuitGame()
+    public void PressQuitGame()
+    {
+        pauseMenuPanel.SetActive(false);
+        quitGamePanel.SetActive(true);
+    }
+
+    public void CancelQuitGame()
+    {
+        quitGamePanel.SetActive(false);
+        pauseMenuPanel.SetActive(true);
+    }
+
+    public void AcceptQuitGame()
     {
         Time.timeScale = 1f;
         SniperMove.Instance.DisableMovement();
         startMenuPanel.SetActive(true);
-        pauseMenuPanel.SetActive(false);
+        quitGamePanel.SetActive(false);
         sniperHUD.SetActive(false);
     }
 }

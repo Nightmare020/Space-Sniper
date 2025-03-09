@@ -526,7 +526,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1352355644}
         m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
-        m_MethodName: QuitGame
+        m_MethodName: PressQuitGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -839,7 +839,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 100213272}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1238775011}
+        m_TargetAssemblyTypeName: StartMenu, Assembly-CSharp
+        m_MethodName: AcceptQuit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &100213272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1231,7 +1243,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1238775011}
         m_TargetAssemblyTypeName: StartMenu, Assembly-CSharp
-        m_MethodName: QuitGame
+        m_MethodName: PressQuit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1364,7 +1376,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 281600275}
         m_TargetAssemblyTypeName: SettingsMenu, Assembly-CSharp
-        m_MethodName: BackFromStartMenu
+        m_MethodName: ApplySettings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1859,7 +1871,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1329739791}
         m_TargetAssemblyTypeName: GameOver, Assembly-CSharp
-        m_MethodName: QuitGame
+        m_MethodName: PressQuit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1989,7 +2001,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 234231485}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1352355644}
+        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
+        m_MethodName: AcceptQuitGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &234231485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2318,6 +2342,13 @@ MonoBehaviour:
   startMenuPanel: {fileID: 873424861}
   pauseMenuPanel: {fileID: 517786511}
   gameOverMenuPanel: {fileID: 920322756}
+  unsavedChangesPopUpPanel: {fileID: 1885432873}
+  resolutionDropdown: {fileID: 990504132}
+  screenSizeDropdown: {fileID: 572793756}
+  generalVolumeSlider: {fileID: 1505444425}
+  musicVolumeSlider: {fileID: 488606044}
+  sfxVolumeSlider: {fileID: 2132322224}
+  voicesVolumeSlider: {fileID: 1752174581}
 --- !u!1 &291080599
 GameObject:
   m_ObjectHideFlags: 0
@@ -4551,7 +4582,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 689416925}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 281600275}
+        m_TargetAssemblyTypeName: SettingsMenu, Assembly-CSharp
+        m_MethodName: CancelGoBack
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &689416925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4829,7 +4872,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.39215687}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5255,7 +5298,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 793051904}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 281600275}
+        m_TargetAssemblyTypeName: SettingsMenu, Assembly-CSharp
+        m_MethodName: AcceptGoBack
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &793051904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8692,6 +8747,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startMenuPanel: {fileID: 873424861}
   settingsPanel: {fileID: 386699002}
+  quitGamePanel: {fileID: 61117577}
   mainCamera: {fileID: 1023717484}
   sniperHUD: {fileID: 17033010}
   zoomedOutFOV: 60
@@ -9127,7 +9183,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1295703304}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1329739791}
+        m_TargetAssemblyTypeName: GameOver, Assembly-CSharp
+        m_MethodName: AcceptQuit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1295703304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9526,6 +9594,7 @@ MonoBehaviour:
   gameOverMenuPanel: {fileID: 920322756}
   settingsPanel: {fileID: 386699002}
   startMenuPanel: {fileID: 873424861}
+  quitGamePanel: {fileID: 758213356}
   sniperHUD: {fileID: 17033010}
   gameOverDuration: 3
 --- !u!1 &1343839226
@@ -9610,7 +9679,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1343839229}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1329739791}
+        m_TargetAssemblyTypeName: GameOver, Assembly-CSharp
+        m_MethodName: CancelQuit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1343839229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9769,6 +9850,7 @@ MonoBehaviour:
   settingsPanel: {fileID: 386699002}
   startMenuPanel: {fileID: 873424861}
   sniperHUD: {fileID: 17033010}
+  quitGamePanel: {fileID: 890428286}
   mainCamera: {fileID: 1023717484}
 --- !u!1 &1371945746
 GameObject:
@@ -10039,7 +10121,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1415414586}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1238775011}
+        m_TargetAssemblyTypeName: StartMenu, Assembly-CSharp
+        m_MethodName: CancelQuit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1415414586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10516,7 +10610,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1477356567}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1352355644}
+        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
+        m_MethodName: CancelQuitGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1477356567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12367,7 +12473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
