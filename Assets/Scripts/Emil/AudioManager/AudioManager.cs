@@ -30,6 +30,7 @@ public class AudioManager : MonoBehaviour
             s.source.loop = s.loop;
 
             s.source.outputAudioMixerGroup = s.mixerGroup;
+            s.source.playOnAwake = false;
         }
         
         InitializeDialogueSystem();
@@ -102,6 +103,7 @@ public class AudioManager : MonoBehaviour
         newSound.source = gameObject.AddComponent<AudioSource>();
         newSound.source.clip = newSound.clip;
         newSound.source.outputAudioMixerGroup = defaultDialogueSound.mixerGroup;
+        newSound.source.playOnAwake = false;
         
         return newSound;
     }
