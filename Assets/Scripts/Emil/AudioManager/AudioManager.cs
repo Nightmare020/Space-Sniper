@@ -35,7 +35,7 @@ public class AudioManager : MonoBehaviour
         }
         
         InitializeDialogueSystem();
-        // Play("Background 1");
+        Play("Background 1");
     }
 
     public void Play(string sound)
@@ -51,6 +51,15 @@ public class AudioManager : MonoBehaviour
         s.source.pitch = s.pitch * (1f + UnityEngine.Random.Range(-s.pitchVariance / 2f, s.pitchVariance / 2f));
 
         s.source.Play();
+    }
+    
+    public void Stop(string soundName)
+    {
+        Sound s = Array.Find(sounds, item => item.name == soundName);
+        if (s != null && s.source != null)
+        {
+            s.source.Stop();
+        }
     }
     
     

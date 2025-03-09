@@ -91,6 +91,8 @@ public class GameManager : MonoBehaviour
         NPCManager.instance.ClearNPCs();
         Debug.LogError("GAME WIN!!");
         targetText.text = "GAME WIN!";
+        AudioManager.instance.Stop("Background 1");
+        AudioManager.instance.Play("Outro");
     }
 
     void NextRound()
