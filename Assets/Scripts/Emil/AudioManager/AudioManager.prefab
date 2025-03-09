@@ -74,7 +74,7 @@ MonoBehaviour:
     mixerGroup: {fileID: 0}
     source: {fileID: 0}
   - name: WrongTarget
-    clip: {fileID: 8300000, guid: a0a7f189b1d88104bb15c36480d0a3b6, type: 3}
+    clip: {fileID: 8300000, guid: f9a06f7d0c7f9a940a3b60414124eea4, type: 3}
     volume: 1
     volumeVariance: 0
     pitch: 1
@@ -83,7 +83,7 @@ MonoBehaviour:
     mixerGroup: {fileID: 0}
     source: {fileID: 0}
   - name: RightTarget
-    clip: {fileID: 8300000, guid: ab7dfb548cfa4ce4ab00d1de60ff92d3, type: 3}
+    clip: {fileID: 8300000, guid: ed5b6f2a09d8a1943bdcad919a3d309b, type: 3}
     volume: 1
     volumeVariance: 0
     pitch: 1
@@ -136,95 +136,22 @@ MonoBehaviour:
     loop: 0
     mixerGroup: {fileID: 0}
     source: {fileID: 0}
-  clientDialogues:
-  - client: 0
-    masterInsult:
-      name: 
-      clip: {fileID: 0}
-      volume: 0
-      volumeVariance: 0
-      pitch: 0
-      pitchVariance: 0
-      loop: 0
-      mixerGroup: {fileID: 0}
-      source: {fileID: 0}
-    followingMaleInsult:
-      name: 
-      clip: {fileID: 0}
-      volume: 0
-      volumeVariance: 0
-      pitch: 0
-      pitchVariance: 0
-      loop: 0
-      mixerGroup: {fileID: 0}
-      source: {fileID: 0}
-    followingFemaleInsult:
-      name: 
-      clip: {fileID: 0}
-      volume: 0
-      volumeVariance: 0
-      pitch: 0
-      pitchVariance: 0
-      loop: 0
-      mixerGroup: {fileID: 0}
-      source: {fileID: 0}
-    correctShot:
-      name: 
-      clip: {fileID: 0}
-      volume: 0
-      volumeVariance: 0
-      pitch: 0
-      pitchVariance: 0
-      loop: 0
-      mixerGroup: {fileID: 0}
-      source: {fileID: 0}
-    masterShot:
-      name: 
-      clip: {fileID: 0}
-      volume: 0
-      volumeVariance: 0
-      pitch: 0
-      pitchVariance: 0
-      loop: 0
-      mixerGroup: {fileID: 0}
-      source: {fileID: 0}
-    firstTargetClue:
-      name: 
-      clip: {fileID: 0}
-      volume: 0
-      volumeVariance: 0
-      pitch: 0
-      pitchVariance: 0
-      loop: 0
-      mixerGroup: {fileID: 0}
-      source: {fileID: 0}
-    secondTargetClue:
-      name: 
-      clip: {fileID: 0}
-      volume: 0
-      volumeVariance: 0
-      pitch: 0
-      pitchVariance: 0
-      loop: 0
-      mixerGroup: {fileID: 0}
-      source: {fileID: 0}
-    thirdTargetClue:
-      name: 
-      clip: {fileID: 0}
-      volume: 0
-      volumeVariance: 0
-      pitch: 0
-      pitchVariance: 0
-      loop: 0
-      mixerGroup: {fileID: 0}
-      source: {fileID: 0}
-    fourthTargetClue:
-      name: 
-      clip: {fileID: 0}
-      volume: 0
-      volumeVariance: 0
-      pitch: 0
-      pitchVariance: 0
-      loop: 0
-      mixerGroup: {fileID: 0}
-      source: {fileID: 0}
+  - name: Outro
+    clip: {fileID: 8300000, guid: ab24823aee147294da27c2c5ee456d1a, type: 3}
+    volume: 0.5
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  defaultDialogueSound:
+    name: 
+    clip: {fileID: 0}
+    volume: 0.75
+    volumeVariance: 0.1
+    pitch: 1
+    pitchVariance: 0.1
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}

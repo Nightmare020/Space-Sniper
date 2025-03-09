@@ -35,7 +35,7 @@ public class AudioManager : MonoBehaviour
         }
         
         InitializeDialogueSystem();
-        // Play("Background 1");
+        Play("Background 1");
     }
 
     public void Play(string sound)
@@ -51,6 +51,15 @@ public class AudioManager : MonoBehaviour
         s.source.pitch = s.pitch * (1f + UnityEngine.Random.Range(-s.pitchVariance / 2f, s.pitchVariance / 2f));
 
         s.source.Play();
+    }
+    
+    public void Stop(string soundName)
+    {
+        Sound s = Array.Find(sounds, item => item.name == soundName);
+        if (s != null && s.source != null)
+        {
+            s.source.Stop();
+        }
     }
     
     
@@ -113,5 +122,20 @@ public class AudioManager : MonoBehaviour
         {
             Debug.LogError("Error playing");
         }
+    }
+    
+    public float GetSoundDuration(string soundName)
+    {
+        var s = Array.Find(sounds, item => item.name == soundName);
+        if (s == null || s.source == null || s.source.clip == null) return 0;
+        return s.source.clip.length / s.source.pitch;
+    }
+    
+    public float GetDialogueDuration(ClientName client, DialogueType type)
+    {
+        var clientKey = client.ToString();
+        if (!_clientDialogueMap.ContainsKey(clientKey)) return 0;
+        if (!_clientDialogueMap[clientKey].TryGetValue(type, out var sound)) return 0;
+        return sound.source.clip.length / sound.source.pitch;
     }
 }
