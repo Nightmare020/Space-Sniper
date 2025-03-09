@@ -50,6 +50,7 @@ public class AudioManager : MonoBehaviour
         s.source.pitch = s.pitch * (1f + UnityEngine.Random.Range(-s.pitchVariance / 2f, s.pitchVariance / 2f));
 
         s.source.Play();
+
     }
     
     public void Stop(string soundName)
@@ -117,6 +118,7 @@ public class AudioManager : MonoBehaviour
 
         if (_clientDialogueMap[clientKey].TryGetValue(type, out Sound sound)) {
             sound.source.Play();
+            WalkieTalkie.Instance.WalkieTalkieVoice(sound.source.clip.length);
         }
         else
         {

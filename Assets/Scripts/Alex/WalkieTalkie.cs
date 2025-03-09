@@ -14,15 +14,11 @@ public class WalkieTalkie : MonoBehaviour
     // Duration each wave appears
     public float waveDuration = 0.5f;
 
-    // Total duration the walkie-talkie appears
-    public float totalDuration = 5f;
-
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
