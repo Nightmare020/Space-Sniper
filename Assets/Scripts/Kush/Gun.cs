@@ -89,6 +89,8 @@ public class Gun : MonoBehaviour
             if (curAmmo > 0 && !isReloading)
             {
                 AudioManager.instance.Play("SniperShot");
+                Bullets.Instance.BulletShooted();
+                RecoilEffect.Instance.TriggerRecoil();
 
                 //Shoot logic
                 if (Physics.Raycast(MouseLookAround.instance.transform.position, MouseLookAround.instance.transform.forward, out RaycastHit hit))

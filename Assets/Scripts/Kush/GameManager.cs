@@ -51,6 +51,8 @@ public class GameManager : MonoBehaviour
         NPCProperties.SetTargetProperties(targetProperties);
         GetNewTarget();
         SpawnNPC();
+
+        Bullets.Instance.ShowBullets();
     }
 
     public IEnumerator Fade(float startAlpha, float endAlpha, float fadeDuration, bool clear = false, bool end = false)

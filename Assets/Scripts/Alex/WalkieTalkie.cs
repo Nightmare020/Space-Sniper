@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WalkieTalkie : MonoBehaviour
 {
+    public static WalkieTalkie Instance { get; private set; }
+
     public GameObject walkieTalkieSprite;
 
     // Array to hold the audio wave sprites
@@ -15,24 +17,32 @@ public class WalkieTalkie : MonoBehaviour
     // Total duration the walkie-talkie appears
     public float totalDuration = 5f;
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        // To test it out, check if the space bar is pressed
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Instance == null)
         {
-            StartCoroutine(ShowWalkieTalkie());
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 
-    private IEnumerator ShowWalkieTalkie()
+    public void WalkieTalkieVoice(float duration)
+    {
+        StartCoroutine(ShowWalkieTalkie(duration));
+    }
+
+    private IEnumerator ShowWalkieTalkie(float duration)
     {
         // Show the walkie-talkie sprite
         walkieTalkieSprite.SetActive(true);
 
         float elapsedTime = 0f;
 
-        while (elapsedTime < totalDuration)
+        while (elapsedTime < duration)
         {
             // Loop through each wave sprite
             for (int i = 0; i < audioWaveSprites.Length; i++)

@@ -26,6 +26,22 @@ public class Bullets : MonoBehaviour
         }
     }
 
+    public void ShowBullets()
+    {
+        for (int i = 0; i < bulletImages.Length; i++)
+        {
+            bulletImages[i].SetActive(true);
+        }
+    }
+
+    public void HideBullets()
+    {
+        for (int i = 0; i < bulletImages.Length; i++)
+        {
+            bulletImages[i].SetActive(false);
+        }
+    }
+
     public void BulletShooted()
     {
         // Check if there are any bullets left
