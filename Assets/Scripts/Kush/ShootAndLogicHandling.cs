@@ -55,7 +55,7 @@ public class ShootAndLogicHandling : MonoBehaviour
     public void ProcessHit(RaycastHit hit)
     {
         onShoot.Invoke(hit.point);
-        if(hit.transform.gameObject.TryGetComponent<NPC>(out NPC npc))
+        if(hit.transform.gameObject.TryGetComponent<NPC>(out NPC npc) && !GameManager.instance.roundWin)
         {
             AudioManager.instance.Play("TargetHit");
             onHit.Invoke(hit.point);
@@ -68,6 +68,7 @@ public class ShootAndLogicHandling : MonoBehaviour
 
             if (returnVal.value == -1)
             {
+                GameManager.instance.roundWin = true;
                 Debug.Log("Master Win!");
                 //We need to play the master win from the client here, but "yay" is also good
                 StartCoroutine(PlaySequence("RightTarget", DialogueType.MasterCorrect));
@@ -78,6 +79,7 @@ public class ShootAndLogicHandling : MonoBehaviour
                 //We need to play correct shot from client here, but "yay" is also good
                 if (returnVal.property == GameManager.instance.GetTotProperty())
                 {
+                    GameManager.instance.roundWin = true;
                     Debug.Log("Round Win!!");
                     StartCoroutine(PlaySequence("RightTarget", DialogueType.CorrectShot));
                     // GameManager.instance.RoundWin();

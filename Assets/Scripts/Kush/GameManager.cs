@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [Header("Round")]
     [SerializeField] int curRound = 1;
     int totRound = 5;
+    public bool roundWin = false;
 
     [Header("Client Info")]
     [SerializeField] int clientNo = 0;
@@ -179,6 +180,7 @@ public class GameManager : MonoBehaviour
         curProperty = 1;
         GetNewTarget();
         kills = 0;
+        roundWin = false;
     }
 
     private void Awake()
