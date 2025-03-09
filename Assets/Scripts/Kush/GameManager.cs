@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [Header("Round")]
     [SerializeField] int curRound = 1;
     int totRound = 5;
+    public bool roundWin = false;
 
     [Header("Client Info")]
     [SerializeField] int clientNo = 0;
@@ -92,9 +93,15 @@ public class GameManager : MonoBehaviour
 
         if (end)
         {
-            finalScreen.SetActive(true);
-            MouseLookAround.instance.SetMouseLock(false);
+            
         }
+    }
+
+    IEnumerator FinalScreen()
+    {
+        //Delay to match the soundtrack
+        yield return new WaitForSeconds(10f);
+        finalScreen.SetActive(true);
     }
 
     public NPCProperties.Properties GetTargetProperties()
@@ -162,13 +169,15 @@ public class GameManager : MonoBehaviour
 
     IEnumerator PlayWinSounds()
     {
-        StartCoroutine(Fade(0, 1, AudioManager.instance.GetDialogueDuration((ClientName)clientNo, DialogueType.CorrectShot), false, true));
+        //StartCoroutine(Fade(0, 1, AudioManager.instance.GetDialogueDuration((ClientName)clientNo, DialogueType.CorrectShot), false, true));
         ShootAndLogicHandling.instance.shootingAllowed = false;
         MouseLookAround.instance.lookAllowed = false;
         yield return new WaitForSeconds(AudioManager.instance.GetDialogueDuration((ClientName)clientNo, DialogueType.CorrectShot));
         NPCManager.instance.ClearNPCs();
         AudioManager.instance.Stop("Background 1");
         AudioManager.instance.Play("Outro");
+        MouseLookAround.instance.SetMouseLock(false);
+        StartCoroutine(FinalScreen());
     }
 
     void NextRound()
@@ -181,6 +190,7 @@ public class GameManager : MonoBehaviour
         curProperty = 1;
         GetNewTarget();
         kills = 0;
+        roundWin = false;
     }
 
     private void Awake()
