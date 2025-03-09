@@ -23,13 +23,15 @@ public class NPCMovement : MonoBehaviour
     {
         if(_target != target)
         {
-            _target= target;
+            if (agent == null) return;
+            _target = target;
             agent.destination = target.position;
         }
     }
 
     public void ChangeSpeed(float speed)
     {
+        if (agent == null) return;
         agent.speed = speed;
     }
 
@@ -40,11 +42,13 @@ public class NPCMovement : MonoBehaviour
     }
     public void StartAgent()
     {
+        if (agent == null) return;
         agent.isStopped = false;
         agent.ResetPath();
     }
     public void StopAgent()
     {
+        if (agent == null) return;
         agent.isStopped= true;
         agent.velocity = Vector3.zero;
     }

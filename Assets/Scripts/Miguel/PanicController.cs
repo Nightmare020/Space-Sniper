@@ -13,7 +13,6 @@ public class PanicController : MonoBehaviour
     [Range(0f, 1f)]
     [SerializeField] private float fallChance;
     [SerializeField]private bool canHide = false;
-    private bool canFall = false;
 
     private float timer = 1;
    
@@ -23,20 +22,16 @@ public class PanicController : MonoBehaviour
         controller = GetComponent<NPCAIController>();
         anim_Controller = GetComponent<NPCAnimationController>();
         ChangePanicBehaviour();
+        if (PanicManager.instance != null)
+        {
+            PanicManager.instance.AddController(this);
+        }
+        else Debug.LogWarning("No Panic manager in scene");
     }
 
     private void Update()
     {
-        if (canFall)
-        {
-            timer -= Time.deltaTime;
-            if (timer < 0 && controller.IsActive())
-            {
-                Debug.Log("Try react");
-                if(Random.Range(0f,1f) < fallChance) anim_Controller.FallReaction();
-                timer = 1;
-            }
-        }
+       
     }
     public void IncreasePanicLevel()
     {
@@ -61,7 +56,6 @@ public class PanicController : MonoBehaviour
     }
     public void ChangePanicBehaviour()
     {
-        canFall= currentLevel >= 3;
         canHide= currentLevel >= 2;
         controller.ChangeSpeed(speedLevels[currentLevel]);
     }
