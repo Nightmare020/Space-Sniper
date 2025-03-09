@@ -70,24 +70,22 @@ public class ShootAndLogicHandling : MonoBehaviour
             {
                 Debug.Log("Master Win!");
                 //We need to play the master win from the client here, but "yay" is also good
-                //AudioManager.instance.Play("RightTarget");
-                AudioManager.instance.PlayDialogue((ClientName)GameManager.instance.GetClientNo(), DialogueType.MasterCorrect);
-                GameManager.instance.RoundWin();
+                StartCoroutine(PlaySequence("RightTarget", DialogueType.MasterCorrect));
+                // GameManager.instance.RoundWin();
             }
             else if (returnVal.value == 1)
             {
                 //We need to play correct shot from client here, but "yay" is also good
-                //AudioManager.instance.Play("RightTarget");
-                AudioManager.instance.PlayDialogue((ClientName)GameManager.instance.GetClientNo(), DialogueType.CorrectShot);
                 if (returnVal.property == GameManager.instance.GetTotProperty())
                 {
                     Debug.Log("Round Win!!");
-                    GameManager.instance.RoundWin();
+                    StartCoroutine(PlaySequence("RightTarget", DialogueType.CorrectShot));
+                    // GameManager.instance.RoundWin();
                 }
             }
             else if(returnVal.value == 0)
             {
-                //AudioManager.instance.Play("WrongTarget");
+                AudioManager.instance.Play("WrongTarget");
                 switch (returnVal.property) {
                     case 1:
                         Debug.Log("Sex Fails, play master insult, followed by sex line");
@@ -118,5 +116,17 @@ public class ShootAndLogicHandling : MonoBehaviour
             hit.transform.gameObject.SetActive(false);
         }
         else onMiss.Invoke(hit.point);
+    }
+
+    private IEnumerator PlaySequence(string s, DialogueType d = DialogueType.None)
+    {
+        AudioManager.instance.Play(s);
+        yield return new WaitForSeconds(AudioManager.instance.GetSoundDuration(s));
+        if (d != DialogueType.None)
+        {
+            AudioManager.instance.PlayDialogue((ClientName)GameManager.instance.GetClientNo(), d);
+        }
+        yield return new WaitForSeconds(AudioManager.instance.GetDialogueDuration((ClientName)GameManager.instance.GetClientNo(), d));
+        GameManager.instance.RoundWin();
     }
 }
