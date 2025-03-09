@@ -6,7 +6,6 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
-    public AudioMixerGroup mixerGroup;
     public Sound[] sounds;
 
     [Header("Dialogue Defaults")]
@@ -22,7 +21,6 @@ public class AudioManager : MonoBehaviour
         else
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
 
         foreach (var s in sounds)
@@ -31,7 +29,7 @@ public class AudioManager : MonoBehaviour
             s.source.clip = s.clip;
             s.source.loop = s.loop;
 
-            s.source.outputAudioMixerGroup = mixerGroup;
+            s.source.outputAudioMixerGroup = s.mixerGroup;
         }
         
         InitializeDialogueSystem();
@@ -103,7 +101,7 @@ public class AudioManager : MonoBehaviour
 
         newSound.source = gameObject.AddComponent<AudioSource>();
         newSound.source.clip = newSound.clip;
-        newSound.source.outputAudioMixerGroup = mixerGroup;
+        newSound.source.outputAudioMixerGroup = defaultDialogueSound.mixerGroup;
         
         return newSound;
     }

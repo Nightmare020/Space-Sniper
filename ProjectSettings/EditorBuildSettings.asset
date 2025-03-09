@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Kush/MainScene.unity
+    guid: b4a3b82a369374d49b5905b3d13b204a
   m_configObjects: {}
