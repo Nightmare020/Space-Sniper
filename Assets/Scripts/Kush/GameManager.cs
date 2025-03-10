@@ -99,6 +99,8 @@ public class GameManager : MonoBehaviour
     {
         //Delay to match the soundtrack
         yield return new WaitForSeconds(10f);
+        ShootAndLogicHandling.instance.shootingAllowed = false;
+        MouseLookAround.instance.lookAllowed = false;
         finalScreen.SetActive(true);
     }
 
@@ -168,8 +170,7 @@ public class GameManager : MonoBehaviour
     IEnumerator PlayWinSounds()
     {
         //StartCoroutine(Fade(0, 1, AudioManager.instance.GetDialogueDuration((ClientName)clientNo, DialogueType.CorrectShot), false, true));
-        ShootAndLogicHandling.instance.shootingAllowed = false;
-        MouseLookAround.instance.lookAllowed = false;
+        
         yield return new WaitForSeconds(AudioManager.instance.GetDialogueDuration((ClientName)clientNo, DialogueType.CorrectShot));
         NPCManager.instance.ClearNPCs();
         AudioManager.instance.Stop("Background 1");

@@ -6,10 +6,10 @@ public class MouseLookAround : MonoBehaviour
 {
     public static MouseLookAround instance;
 
-    [Header("Mouse variables")]
+    [Header("Mouse Variables")]
     [SerializeField] float sensitivity = 10f;
     [SerializeField] float fov = 60f;
-    [SerializeField] float scopeFactor = 2f;
+    [SerializeField] float[] scopeFactors;
     public bool lookAllowed = false;
 
     [Header("Player Reference")]
@@ -44,7 +44,6 @@ public class MouseLookAround : MonoBehaviour
         {
             ApplyLookAround();
         }
-
     }
 
     public void SetMouseLock(bool state = true)
@@ -61,11 +60,18 @@ public class MouseLookAround : MonoBehaviour
         }
     }
 
-    public void ZoomIn(bool b)
+    public void ZoomIn(bool b, bool tab = false)
     {
         if (b)
         {
-            cam.fieldOfView = fov * 1 / scopeFactor;
+            if (tab)
+            {
+                cam.fieldOfView = fov * 1 / scopeFactors[1];
+            }
+            else
+            {
+                cam.fieldOfView = fov * 1 / scopeFactors[0];
+            }
         }
         else
         {

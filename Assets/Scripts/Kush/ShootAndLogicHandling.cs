@@ -49,6 +49,16 @@ public class ShootAndLogicHandling : MonoBehaviour
             {
                 gun.ScopeIn();
             }
+
+            if(Input.GetKeyDown(KeyCode.Tab) && gun.scoped)
+            {
+                MouseLookAround.instance.ZoomIn(gun.scoped, true);
+            }
+
+            if(Input.GetKeyUp(KeyCode.Tab) && gun.scoped)
+            {
+                MouseLookAround.instance.ZoomIn(gun.scoped, false);
+            }
         }
     }
 
