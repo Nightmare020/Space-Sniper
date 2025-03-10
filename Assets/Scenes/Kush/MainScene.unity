@@ -19954,7 +19954,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireRate: 1.5
   reloadTime: 2
-  maxAmmo: 500000
+  maxAmmo: 5000000
   scope: {fileID: 1936592853}
   nextTimeToFire: 0
   isReloading: 0
