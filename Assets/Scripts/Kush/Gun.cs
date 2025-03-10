@@ -35,11 +35,6 @@ public class Gun : MonoBehaviour
 
     private void Update()
     {
-        if (scoped && Input.GetKeyDown(KeyCode.Tab))
-        {
-            SniperZoom.Instance.ToggleZoom();
-        }
-
         if (curAmmo <=0 && scoped)
         {
             UnScope();

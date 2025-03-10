@@ -6468,7 +6468,6 @@ GameObject:
   - component: {fileID: 986861346}
   - component: {fileID: 986861348}
   - component: {fileID: 986861347}
-  - component: {fileID: 986861350}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -6624,20 +6623,6 @@ MonoBehaviour:
   sniperView: {fileID: 1289360676}
   recoilDistance: 1
   recoilDuration: 0.1
---- !u!114 &986861350
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 986861341}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa2e3a0d1a5f321459374b783171aafe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainCamera: {fileID: 1289360676}
-  zoomedFOV: 30
 --- !u!1001 &989835353
 PrefabInstance:
   m_ObjectHideFlags: 0
