@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SniperZoom : MonoBehaviour
 {
+    public static SniperZoom Instance { get; private set; }
+
     public Camera mainCamera;
 
     // Desired FOV when zoomed in
@@ -11,6 +13,19 @@ public class SniperZoom : MonoBehaviour
 
     private float originalFOV;
     private bool isZoomedIn = false;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -21,16 +36,7 @@ public class SniperZoom : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            ToggleZoom();
-        }
-    }
-
-    private void ToggleZoom()
+    public void ToggleZoom()
     {
         if (mainCamera != null)
         {

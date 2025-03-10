@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -99,7 +100,11 @@ public class MainMenuManager : MonoBehaviour
 
     public void QuitGame()
     {
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#else
         Application.Quit();
+#endif
     }
 
     // Start is called before the first frame update
