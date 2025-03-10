@@ -5,7 +5,8 @@ Shader "Custom/PostProcessBlurEffect"
         _MainTex ("Texture", 2D) = "white" {}
         _BlurSize ("Blur Size", Range(0, 10)) = 3
         _ScopeCenter("Scope Center", Vector) = (0.5, 0.5, 0, 0)
-        _ScopeRadius("Scope Radius", Range(0, 1)) = 0.38
+        _Width ("Ellipse Width", Range(0, 1)) = 0.4
+        _Height ("Ellipse Height", Range(0, 1)) = 0.55
 
     }
     SubShader
@@ -36,7 +37,8 @@ Shader "Custom/PostProcessBlurEffect"
             sampler2D _MainTex;
             float _BlurSize;
             float2 _ScopeCenter;
-            float _ScopeRadius;
+            float _Width;
+            float _Height;
 
             v2f vert (appdata v)
             {
@@ -49,9 +51,9 @@ Shader "Custom/PostProcessBlurEffect"
             fixed4 frag (v2f i) : SV_Target
             {
                 float2 uv = i.uv;
-                float dist = distance(uv, _ScopeCenter);
+                float dist = sqrt(pow((uv.x - _ScopeCenter.x) / _Width, 2) + pow((uv.y - _ScopeCenter.y) / _Height, 2));
 
-                if (dist > _ScopeRadius)
+                if (dist > 1.0)
                 {
                     // Apply blur only out of the circle
                     float4 color = tex2D(_MainTex, uv);

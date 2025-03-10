@@ -18,14 +18,29 @@ public class Gun : MonoBehaviour
     public int curAmmo;
     public bool scoped = false;
 
+    private Camera mainCamera;
+    private ApplyPostprocess postProcess;
+
     private void Awake()
     {
         curAmmo = maxAmmo;
+        mainCamera = Camera.main;
+        postProcess = mainCamera.GetComponent<ApplyPostprocess>();
+
+        if (postProcess != null)
+        {
+            postProcess.enabled = false;
+        }
     }
 
     private void Update()
     {
-        if(curAmmo <=0 && scoped)
+        if (scoped && Input.GetKeyDown(KeyCode.Tab))
+        {
+            SniperZoom.Instance.ToggleZoom();
+        }
+
+        if (curAmmo <=0 && scoped)
         {
             UnScope();
         }
@@ -44,6 +59,11 @@ public class Gun : MonoBehaviour
             scope.SetActive(scoped);
             gameObject.GetComponent<MeshRenderer>().enabled = !scoped;
             MouseLookAround.instance.ZoomIn(scoped);
+
+            if (postProcess != null)
+            {
+                postProcess.enabled = scoped;
+            }
         }
 
         if (scoped && curAmmo <= 0)
@@ -58,6 +78,11 @@ public class Gun : MonoBehaviour
         scope.SetActive(false);
         gameObject.GetComponent<MeshRenderer>().enabled = true;
         MouseLookAround.instance.ZoomIn(false);
+
+        if (postProcess != null)
+        {
+            postProcess.enabled = false;
+        }
     }
 
     public void ReloadGun()
